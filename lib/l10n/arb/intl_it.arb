@@ -1,192 +1,192 @@
 {
-  "@@locale": "ja",
-  "appTitle": "Flutter Riverpod クリーンアーキテクチャ",
+  "@@locale": "it",
+  "appTitle": "Flutter Riverpod Architettura Pulita",
   "@appTitle": {
     "description": "The title of the application"
   },
-  "welcomeMessage": "Flutter Riverpod クリーンアーキテクチャへようこそ",
+  "welcomeMessage": "Benvenuto in Flutter Riverpod Architettura Pulita",
   "@welcomeMessage": {
     "description": "The welcome message displayed on the home screen"
   },
-  "home": "ホーム",
+  "home": "Home",
   "@home": {
     "description": "Label for the home tab or button"
   },
-  "settings": "設定",
+  "settings": "Impostazioni",
   "@settings": {
     "description": "Label for the settings tab or button"
   },
-  "profile": "プロフィール",
+  "profile": "Profilo",
   "@profile": {
     "description": "Label for the profile tab or button"
   },
-  "darkMode": "ダークモード",
+  "darkMode": "Modalità Scura",
   "@darkMode": {
     "description": "Label for the dark mode option"
   },
-  "lightMode": "ライトモード",
+  "lightMode": "Modalità Chiara",
   "@lightMode": {
     "description": "Label for the light mode option"
   },
-  "systemMode": "システムモード",
+  "systemMode": "Modalità Sistema",
   "@systemMode": {
     "description": "Label for the system mode option"
   },
-  "language": "言語",
+  "language": "Lingua",
   "@language": {
     "description": "Label for language selection"
   },
-  "change_language": "アプリの言語を変更",
+  "change_language": "Cambia lingua applicazione",
   "@change_language": {
     "description": "Label for changing the application language"
   },
-  "theme": "テーマ",
+  "theme": "Tema",
   "@theme": {
     "description": "Label for theme selection"
   },
-  "change_theme": "アプリのテーマを変更",
+  "change_theme": "Cambia tema applicazione",
   "@change_theme": {
     "description": "Label for changing the application theme"
   },
-  "notifications": "通知",
+  "notifications": "Notifiche",
   "@notifications": {
     "description": "Label for notifications settings"
   },
-  "notification_settings": "通知設定",
+  "notification_settings": "Configura preferenze di notifica",
   "@notification_settings": {
     "description": "Label for notification settings description"
   },
-  "localization_demo": "ローカライズ デモ",
+  "localization_demo": "Demo localizzazione",
   "@localization_demo": {
     "description": "Label for the localization demo option"
   },
-  "localization_demo_description": "言語とフォーマットのローカリゼーション機能をデモ",
+  "localization_demo_description": "Visualizza le funzionalità di localizzazione in azione",
   "@localization_demo_description": {
     "description": "Description for the localization demo option"
   },
-  "language_settings": "言語設定",
+  "language_settings": "Impostazioni lingua",
   "@language_settings": {
     "description": "Title for the language settings screen"
   },
-  "select_your_language": "言語を選択",
+  "select_your_language": "Seleziona la lingua desiderata",
   "@select_your_language": {
     "description": "Instruction to select a language"
   },
-  "language_explanation": "選択した言語はアプリ全体に適用されます",
+  "language_explanation": "La lingua selezionata sarà applicata all'intera applicazione",
   "@language_explanation": {
     "description": "Explanation of the language selection effects"
   },
-  "localization_assets_demo": "ローカライズされたアセット デモ",
+  "localization_assets_demo": "Demo risorse localizzate",
   "@localization_assets_demo": {
     "description": "Title for the localization assets demo screen"
   },
-  "current_language": "現在の言語",
+  "current_language": "Lingua corrente",
   "@current_language": {
     "description": "Label for displaying current language info"
   },
-  "language_code": "言語コード",
+  "language_code": "Codice lingua",
   "@language_code": {
     "description": "Label for language code"
   },
-  "language_name": "言語名",
+  "language_name": "Nome lingua",
   "@language_name": {
     "description": "Label for language name"
   },
-  "formatting_examples": "フォーマット例",
+  "formatting_examples": "Esempi di formattazione",
   "@formatting_examples": {
     "description": "Title for formatting examples section"
   },
-  "date_full": "日付（完全）",
+  "date_full": "Data (completa)",
   "@date_full": {
     "description": "Label for full date format example"
   },
-  "date_short": "日付（短）",
+  "date_short": "Data (breve)",
   "@date_short": {
     "description": "Label for short date format example"
   },
-  "time": "時刻",
+  "time": "Ora",
   "@time": {
     "description": "Label for time format example"
   },
-  "currency": "通貨",
+  "currency": "Valuta",
   "@currency": {
     "description": "Label for currency format example"
   },
-  "percent": "パーセント",
+  "percent": "Percentuale",
   "@percent": {
     "description": "Label for percent format example"
   },
-  "localized_assets": "ローカライズされたアセット",
+  "localized_assets": "Risorse localizzate",
   "@localized_assets": {
     "description": "Title for localized assets section"
   },
-  "localized_assets_explanation": "選択した言語に応じて異なる画像やリソースを読み込む方法を示します。",
+  "localized_assets_explanation": "Questa sezione dimostra come caricare risorse diverse in base alla lingua selezionata. Immagini, audio e altre risorse possono variare per lingua.",
   "@localized_assets_explanation": {
     "description": "Explanation of localized assets feature"
   },
-  "image_example": "画像の例",
+  "image_example": "Esempio di immagine localizzata",
   "@image_example": {
     "description": "Title for localized image example"
   },
-  "welcome_image_caption": "選択した言語に合わせてウェルカム画像が表示されます",
+  "welcome_image_caption": "Questa immagine viene caricata in base alla lingua selezionata",
   "@welcome_image_caption": {
     "description": "Caption for the welcome image example"
   },
-  "common_image_example": "共通画像の例",
+  "common_image_example": "Esempio di immagine comune",
   "@common_image_example": {
     "description": "Title for common image example"
   },
-  "common_image_caption": "この画像はすべての言語で共有されます",
+  "common_image_caption": "Questa immagine è la stessa per tutte le lingue",
   "@common_image_caption": {
     "description": "Caption for the common image example"
   },
-  "logout": "ログアウト",
+  "logout": "Disconnetti",
   "@logout": {
     "description": "Label for the logout button"
   },
-  "login": "ログイン",
+  "login": "Accedi",
   "@login": {
     "description": "Label for the login button"
   },
-  "email": "メールアドレス",
+  "email": "Email",
   "@email": {
     "description": "Label for the email field"
   },
-  "password": "パスワード",
+  "password": "Password",
   "@password": {
     "description": "Label for the password field"
   },
-  "signIn": "サインイン",
+  "signIn": "Entra",
   "@signIn": {
     "description": "Label for the sign in button"
   },
-  "register": "登録",
+  "register": "Registrati",
   "@register": {
     "description": "Label for the register button"
   },
-  "forgotPassword": "パスワードをお忘れですか？",
+  "forgotPassword": "Hai dimenticato la password?",
   "@forgotPassword": {
     "description": "Label for the forgot password button"
   },
-  "errorOccurred": "エラーが発生しました",
+  "errorOccurred": "Si è verificato un errore",
   "@errorOccurred": {
     "description": "Generic error message"
   },
-  "tryAgain": "再試行",
+  "tryAgain": "Riprova",
   "@tryAgain": {
     "description": "Label for the try again button"
   },
-  "greeting": "こんにちは、{name}さん！",
+  "greeting": "Ciao, {name}!",
   "@greeting": {
     "description": "A greeting message with the person's name",
     "placeholders": {
       "name": {
         "type": "String",
-        "example": "Tanaka"
+        "example": "John"
       }
     }
   },
-  "itemCount": "{count, plural, =0{アイテムがありません} =1{1 件のアイテム} other{{count} 件のアイテム}}",
+  "itemCount": "{count, plural, =0{Nessun elemento} =1{1 elemento} other{{count} elementi}}",
   "@itemCount": {
     "description": "A plural message based on an item count",
     "placeholders": {
@@ -196,7 +196,7 @@
       }
     }
   },
-  "lastUpdated": "最終更新: {date}",
+  "lastUpdated": "Ultimo aggiornamento: {date}",
   "@lastUpdated": {
     "description": "When something was last updated",
     "placeholders": {

@@ -1,24 +1,209 @@
 {
   "@@locale": "bn",
-  "appTitle": "Flutter Riverpod ক্লিন আর্কিটেকচার",
-  "welcomeMessage": "Flutter Riverpod ক্লিন আর্কিটেকচারে স্বাগতম",
+  "appTitle": "Flutter Riverpod পরিচ্ছন্ন স্থাপত্য",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcomeMessage": "Flutter Riverpod পরিচ্ছন্ন স্থাপত্যে স্বাগতম",
+  "@welcomeMessage": {
+    "description": "The welcome message displayed on the home screen"
+  },
   "home": "হোম",
+  "@home": {
+    "description": "Label for the home tab or button"
+  },
   "settings": "সেটিংস",
+  "@settings": {
+    "description": "Label for the settings tab or button"
+  },
   "profile": "প্রোফাইল",
+  "@profile": {
+    "description": "Label for the profile tab or button"
+  },
   "darkMode": "ডার্ক মোড",
+  "@darkMode": {
+    "description": "Label for the dark mode option"
+  },
   "lightMode": "লাইট মোড",
+  "@lightMode": {
+    "description": "Label for the light mode option"
+  },
   "systemMode": "সিস্টেম মোড",
+  "@systemMode": {
+    "description": "Label for the system mode option"
+  },
   "language": "ভাষা",
-  "logout": "লগআউট",
-  "login": "লগইন",
+  "@language": {
+    "description": "Label for language selection"
+  },
+  "change_language": "অ্যাপের ভাষা পরিবর্তন করুন",
+  "@change_language": {
+    "description": "Label for changing the application language"
+  },
+  "theme": "থিম",
+  "@theme": {
+    "description": "Label for theme selection"
+  },
+  "change_theme": "অ্যাপের থিম পরিবর্তন করুন",
+  "@change_theme": {
+    "description": "Label for changing the application theme"
+  },
+  "notifications": "বিজ্ঞপ্তি",
+  "@notifications": {
+    "description": "Label for notifications settings"
+  },
+  "notification_settings": "বিজ্ঞপ্তির সেটিংস",
+  "@notification_settings": {
+    "description": "Label for notification settings description"
+  },
+  "localization_demo": "স্থানীয়করণ ডেমো",
+  "@localization_demo": {
+    "description": "Label for the localization demo option"
+  },
+  "localization_demo_description": "ভাষা ও ফরম্যাটিং লোকালাইজেশনের বৈশিষ্ট্য প্রদর্শন করে",
+  "@localization_demo_description": {
+    "description": "Description for the localization demo option"
+  },
+  "language_settings": "ভাষার সেটিংস",
+  "@language_settings": {
+    "description": "Title for the language settings screen"
+  },
+  "select_your_language": "আপনার পছন্দের ভাষা নির্বাচন করুন",
+  "@select_your_language": {
+    "description": "Instruction to select a language"
+  },
+  "language_explanation": "নির্বাচিত ভাষা পুরো অ্যাপে প্রযোজ্য হবে",
+  "@language_explanation": {
+    "description": "Explanation of the language selection effects"
+  },
+  "localization_assets_demo": "লোকালাইজড রিসোর্স ডেমো",
+  "@localization_assets_demo": {
+    "description": "Title for the localization assets demo screen"
+  },
+  "current_language": "বর্তমান ভাষা",
+  "@current_language": {
+    "description": "Label for displaying current language info"
+  },
+  "language_code": "ভাষা কোড",
+  "@language_code": {
+    "description": "Label for language code"
+  },
+  "language_name": "ভাষার নাম",
+  "@language_name": {
+    "description": "Label for language name"
+  },
+  "formatting_examples": "ফরম্যাটিং উদাহরণ",
+  "@formatting_examples": {
+    "description": "Title for formatting examples section"
+  },
+  "date_full": "সম্পূর্ণ তারিখ",
+  "@date_full": {
+    "description": "Label for full date format example"
+  },
+  "date_short": "সংক্ষিপ্ত তারিখ",
+  "@date_short": {
+    "description": "Label for short date format example"
+  },
+  "time": "সময়",
+  "@time": {
+    "description": "Label for time format example"
+  },
+  "currency": "মুদ্রা",
+  "@currency": {
+    "description": "Label for currency format example"
+  },
+  "percent": "শতাংশ",
+  "@percent": {
+    "description": "Label for percent format example"
+  },
+  "localized_assets": "লোকালাইজড রিসোর্স",
+  "@localized_assets": {
+    "description": "Title for localized assets section"
+  },
+  "localized_assets_explanation": "নির্বাচিত ভাষা অনুযায়ী বিভিন্ন সম্পদ লোড করার উদাহরণ দেখায়।",
+  "@localized_assets_explanation": {
+    "description": "Explanation of localized assets feature"
+  },
+  "image_example": "চিত্র উদাহরণ",
+  "@image_example": {
+    "description": "Title for localized image example"
+  },
+  "welcome_image_caption": "নির্বাচিত ভাষা অনুযায়ী স্বাগতম চিত্র দেখানো হয়",
+  "@welcome_image_caption": {
+    "description": "Caption for the welcome image example"
+  },
+  "common_image_example": "সাধারণ চিত্র উদাহরণ",
+  "@common_image_example": {
+    "description": "Title for common image example"
+  },
+  "common_image_caption": "এই চিত্রটি সব ভাষার জন্য একই",
+  "@common_image_caption": {
+    "description": "Caption for the common image example"
+  },
+  "logout": "লগ আউট",
+  "@logout": {
+    "description": "Label for the logout button"
+  },
+  "login": "লগ ইন",
+  "@login": {
+    "description": "Label for the login button"
+  },
   "email": "ইমেইল",
+  "@email": {
+    "description": "Label for the email field"
+  },
   "password": "পাসওয়ার্ড",
+  "@password": {
+    "description": "Label for the password field"
+  },
   "signIn": "সাইন ইন",
-  "register": "রেজিস্টার",
+  "@signIn": {
+    "description": "Label for the sign in button"
+  },
+  "register": "নিবন্ধন করুন",
+  "@register": {
+    "description": "Label for the register button"
+  },
   "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
+  "@forgotPassword": {
+    "description": "Label for the forgot password button"
+  },
   "errorOccurred": "একটি ত্রুটি ঘটেছে",
+  "@errorOccurred": {
+    "description": "Generic error message"
+  },
   "tryAgain": "আবার চেষ্টা করুন",
+  "@tryAgain": {
+    "description": "Label for the try again button"
+  },
   "greeting": "হ্যালো, {name}!",
-  "itemCount": "{count, plural, =0{কোন আইটেম নেই} =1{১টি আইটেম} other{{count}টি আইটেম}}",
-  "lastUpdated": "সর্বশেষ আপডেট: {date}"
+  "@greeting": {
+    "description": "A greeting message with the person's name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Rahim"
+      }
+    }
+  },
+  "itemCount": "{count, plural, =0{কোনও আইটেম নেই} =1{1 আইটেম} other{{count} আইটেম}}",
+  "@itemCount": {
+    "description": "A plural message based on an item count",
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
+  },
+  "lastUpdated": "শেষ আপডেট: {date}",
+  "@lastUpdated": {
+    "description": "When something was last updated",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  }
 }

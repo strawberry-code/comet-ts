@@ -1,24 +1,209 @@
 {
   "@@locale": "de",
   "appTitle": "Flutter Riverpod Saubere Architektur",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
   "welcomeMessage": "Willkommen bei Flutter Riverpod Saubere Architektur",
+  "@welcomeMessage": {
+    "description": "The welcome message displayed on the home screen"
+  },
   "home": "Startseite",
+  "@home": {
+    "description": "Label for the home tab or button"
+  },
   "settings": "Einstellungen",
+  "@settings": {
+    "description": "Label for the settings tab or button"
+  },
   "profile": "Profil",
-  "darkMode": "Dunkelmodus",
-  "lightMode": "Hellmodus",
+  "@profile": {
+    "description": "Label for the profile tab or button"
+  },
+  "darkMode": "Dunkler Modus",
+  "@darkMode": {
+    "description": "Label for the dark mode option"
+  },
+  "lightMode": "Heller Modus",
+  "@lightMode": {
+    "description": "Label for the light mode option"
+  },
   "systemMode": "Systemmodus",
+  "@systemMode": {
+    "description": "Label for the system mode option"
+  },
   "language": "Sprache",
+  "@language": {
+    "description": "Label for language selection"
+  },
+  "change_language": "Sprache ändern",
+  "@change_language": {
+    "description": "Label for changing the application language"
+  },
+  "theme": "Thema",
+  "@theme": {
+    "description": "Label for theme selection"
+  },
+  "change_theme": "Thema ändern",
+  "@change_theme": {
+    "description": "Label for changing the application theme"
+  },
+  "notifications": "Benachrichtigungen",
+  "@notifications": {
+    "description": "Label for notifications settings"
+  },
+  "notification_settings": "Benachrichtigungseinstellungen",
+  "@notification_settings": {
+    "description": "Label for notification settings description"
+  },
+  "localization_demo": "Lokalisierungsdemo",
+  "@localization_demo": {
+    "description": "Label for the localization demo option"
+  },
+  "localization_demo_description": "Zeigt Sprach- und Formatierungsfunktionen",
+  "@localization_demo_description": {
+    "description": "Description for the localization demo option"
+  },
+  "language_settings": "Spracheinstellungen",
+  "@language_settings": {
+    "description": "Title for the language settings screen"
+  },
+  "select_your_language": "Wähle deine Sprache",
+  "@select_your_language": {
+    "description": "Instruction to select a language"
+  },
+  "language_explanation": "Wähle die Sprache, in der du die App verwenden möchtest",
+  "@language_explanation": {
+    "description": "Explanation of the language selection effects"
+  },
+  "localization_assets_demo": "Demo lokalisierter Ressourcen",
+  "@localization_assets_demo": {
+    "description": "Title for the localization assets demo screen"
+  },
+  "current_language": "Aktuelle Sprache",
+  "@current_language": {
+    "description": "Label for displaying current language info"
+  },
+  "language_code": "Sprachcode",
+  "@language_code": {
+    "description": "Label for language code"
+  },
+  "language_name": "Sprachname",
+  "@language_name": {
+    "description": "Label for language name"
+  },
+  "formatting_examples": "Formatierungsbeispiele",
+  "@formatting_examples": {
+    "description": "Title for formatting examples section"
+  },
+  "date_full": "Vollständiges Datum",
+  "@date_full": {
+    "description": "Label for full date format example"
+  },
+  "date_short": "Kurzes Datum",
+  "@date_short": {
+    "description": "Label for short date format example"
+  },
+  "time": "Uhrzeit",
+  "@time": {
+    "description": "Label for time format example"
+  },
+  "currency": "Währung",
+  "@currency": {
+    "description": "Label for currency format example"
+  },
+  "percent": "Prozent",
+  "@percent": {
+    "description": "Label for percent format example"
+  },
+  "localized_assets": "Lokalisierte Ressourcen",
+  "@localized_assets": {
+    "description": "Title for localized assets section"
+  },
+  "localized_assets_explanation": "Beispiele für Bilder und andere Ressourcen, die sich je nach Sprache ändern",
+  "@localized_assets_explanation": {
+    "description": "Explanation of localized assets feature"
+  },
+  "image_example": "Bildbeispiel",
+  "@image_example": {
+    "description": "Title for localized image example"
+  },
+  "welcome_image_caption": "Ein Willkommensbild in Ihrer Sprache lokalisiert",
+  "@welcome_image_caption": {
+    "description": "Caption for the welcome image example"
+  },
+  "common_image_example": "Gemeinsames Bildbeispiel",
+  "@common_image_example": {
+    "description": "Title for common image example"
+  },
+  "common_image_caption": "Dieses Bild wird in allen Sprachen verwendet",
+  "@common_image_caption": {
+    "description": "Caption for the common image example"
+  },
   "logout": "Abmelden",
+  "@logout": {
+    "description": "Label for the logout button"
+  },
   "login": "Anmelden",
+  "@login": {
+    "description": "Label for the login button"
+  },
   "email": "E-Mail",
+  "@email": {
+    "description": "Label for the email field"
+  },
   "password": "Passwort",
+  "@password": {
+    "description": "Label for the password field"
+  },
   "signIn": "Einloggen",
+  "@signIn": {
+    "description": "Label for the sign in button"
+  },
   "register": "Registrieren",
+  "@register": {
+    "description": "Label for the register button"
+  },
   "forgotPassword": "Passwort vergessen?",
+  "@forgotPassword": {
+    "description": "Label for the forgot password button"
+  },
   "errorOccurred": "Ein Fehler ist aufgetreten",
+  "@errorOccurred": {
+    "description": "Generic error message"
+  },
   "tryAgain": "Erneut versuchen",
+  "@tryAgain": {
+    "description": "Label for the try again button"
+  },
   "greeting": "Hallo, {name}!",
+  "@greeting": {
+    "description": "A greeting message with the person's name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Hans"
+      }
+    }
+  },
   "itemCount": "{count, plural, =0{Keine Elemente} =1{1 Element} other{{count} Elemente}}",
-  "lastUpdated": "Zuletzt aktualisiert: {date}"
+  "@itemCount": {
+    "description": "A plural message based on an item count",
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
+  },
+  "lastUpdated": "Zuletzt aktualisiert: {date}",
+  "@lastUpdated": {
+    "description": "When something was last updated",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  }
 }

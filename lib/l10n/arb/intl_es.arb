@@ -1,24 +1,209 @@
 {
   "@@locale": "es",
   "appTitle": "Flutter Riverpod Arquitectura Limpia",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
   "welcomeMessage": "Bienvenido a Flutter Riverpod Arquitectura Limpia",
+  "@welcomeMessage": {
+    "description": "The welcome message displayed on the home screen"
+  },
   "home": "Inicio",
+  "@home": {
+    "description": "Label for the home tab or button"
+  },
   "settings": "Configuraciones",
+  "@settings": {
+    "description": "Label for the settings tab or button"
+  },
   "profile": "Perfil",
+  "@profile": {
+    "description": "Label for the profile tab or button"
+  },
   "darkMode": "Modo Oscuro",
+  "@darkMode": {
+    "description": "Label for the dark mode option"
+  },
   "lightMode": "Modo Claro",
+  "@lightMode": {
+    "description": "Label for the light mode option"
+  },
   "systemMode": "Modo Sistema",
+  "@systemMode": {
+    "description": "Label for the system mode option"
+  },
   "language": "Idioma",
-  "logout": "Cerrar Sesión",
-  "login": "Iniciar Sesión",
-  "email": "Correo Electrónico",
+  "@language": {
+    "description": "Label for language selection"
+  },
+  "change_language": "Cambiar idioma de la aplicación",
+  "@change_language": {
+    "description": "Label for changing the application language"
+  },
+  "theme": "Tema",
+  "@theme": {
+    "description": "Label for theme selection"
+  },
+  "change_theme": "Cambiar tema de la aplicación",
+  "@change_theme": {
+    "description": "Label for changing the application theme"
+  },
+  "notifications": "Notificaciones",
+  "@notifications": {
+    "description": "Label for notifications settings"
+  },
+  "notification_settings": "Configurar preferencias de notificación",
+  "@notification_settings": {
+    "description": "Label for notification settings description"
+  },
+  "localization_demo": "Demostración de localización",
+  "@localization_demo": {
+    "description": "Label for the localization demo option"
+  },
+  "localization_demo_description": "Muestra las funciones de localización de idioma y formato en acción",
+  "@localization_demo_description": {
+    "description": "Description for the localization demo option"
+  },
+  "language_settings": "Configuración de idioma",
+  "@language_settings": {
+    "description": "Title for the language settings screen"
+  },
+  "select_your_language": "Selecciona tu idioma",
+  "@select_your_language": {
+    "description": "Instruction to select a language"
+  },
+  "language_explanation": "El idioma seleccionado se aplicará a toda la aplicación",
+  "@language_explanation": {
+    "description": "Explanation of the language selection effects"
+  },
+  "localization_assets_demo": "Demostración de recursos localizados",
+  "@localization_assets_demo": {
+    "description": "Title for the localization assets demo screen"
+  },
+  "current_language": "Idioma actual",
+  "@current_language": {
+    "description": "Label for displaying current language info"
+  },
+  "language_code": "Código de idioma",
+  "@language_code": {
+    "description": "Label for language code"
+  },
+  "language_name": "Nombre de idioma",
+  "@language_name": {
+    "description": "Label for language name"
+  },
+  "formatting_examples": "Ejemplos de formato",
+  "@formatting_examples": {
+    "description": "Title for formatting examples section"
+  },
+  "date_full": "Fecha completa",
+  "@date_full": {
+    "description": "Label for full date format example"
+  },
+  "date_short": "Fecha corta",
+  "@date_short": {
+    "description": "Label for short date format example"
+  },
+  "time": "Hora",
+  "@time": {
+    "description": "Label for time format example"
+  },
+  "currency": "Moneda",
+  "@currency": {
+    "description": "Label for currency format example"
+  },
+  "percent": "Porcentaje",
+  "@percent": {
+    "description": "Label for percent format example"
+  },
+  "localized_assets": "Recursos localizados",
+  "@localized_assets": {
+    "description": "Title for localized assets section"
+  },
+  "localized_assets_explanation": "Esta sección muestra cómo cargar diferentes recursos según el idioma seleccionado. Imágenes, audio y otros recursos pueden variar.",
+  "@localized_assets_explanation": {
+    "description": "Explanation of localized assets feature"
+  },
+  "image_example": "Ejemplo de imagen localizada",
+  "@image_example": {
+    "description": "Title for localized image example"
+  },
+  "welcome_image_caption": "Una imagen de bienvenida localizada para tu idioma",
+  "@welcome_image_caption": {
+    "description": "Caption for the welcome image example"
+  },
+  "common_image_example": "Ejemplo de imagen común",
+  "@common_image_example": {
+    "description": "Title for common image example"
+  },
+  "common_image_caption": "Esta imagen es la misma para todos los idiomas",
+  "@common_image_caption": {
+    "description": "Caption for the common image example"
+  },
+  "logout": "Cerrar sesión",
+  "@logout": {
+    "description": "Label for the logout button"
+  },
+  "login": "Iniciar sesión",
+  "@login": {
+    "description": "Label for the login button"
+  },
+  "email": "Correo electrónico",
+  "@email": {
+    "description": "Label for the email field"
+  },
   "password": "Contraseña",
-  "signIn": "Iniciar Sesión",
+  "@password": {
+    "description": "Label for the password field"
+  },
+  "signIn": "Iniciar sesión",
+  "@signIn": {
+    "description": "Label for the sign in button"
+  },
   "register": "Registrarse",
-  "forgotPassword": "¿Olvidó su Contraseña?",
+  "@register": {
+    "description": "Label for the register button"
+  },
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "@forgotPassword": {
+    "description": "Label for the forgot password button"
+  },
   "errorOccurred": "Ocurrió un error",
-  "tryAgain": "Intentar de nuevo",
+  "@errorOccurred": {
+    "description": "Generic error message"
+  },
+  "tryAgain": "Reintentar",
+  "@tryAgain": {
+    "description": "Label for the try again button"
+  },
   "greeting": "¡Hola, {name}!",
+  "@greeting": {
+    "description": "A greeting message with the person's name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Juan"
+      }
+    }
+  },
   "itemCount": "{count, plural, =0{No hay elementos} =1{1 elemento} other{{count} elementos}}",
-  "lastUpdated": "Última actualización: {date}"
+  "@itemCount": {
+    "description": "A plural message based on an item count",
+    "placeholders": {
+      "count": {
+        "type": "num",
+        "format": "compact"
+      }
+    }
+  },
+  "lastUpdated": "Última actualización: {date}",
+  "@lastUpdated": {
+    "description": "When something was last updated",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  }
 }
