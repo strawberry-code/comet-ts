@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod_clean_architecture/l10n/app_localizations_delegate.dart';
 import 'package:flutter_riverpod_clean_architecture/l10n/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Key for storing selected language code in SharedPreferences
 const _languageCodeKey = 'selected_language_code';
 
-/// Provider for accessing SharedPreferences
+// Provider for accessing SharedPreferences asynchronously
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
-  throw UnimplementedError();
+  // Viene sempre sovrascritto da main(), non verrà mai chiamato davvero
+  throw UnimplementedError('sharedPreferencesProvider deve essere override-ato in main()');
 });
 
 /// Provider for persisting and retrieving the user's locale preference
 final savedLocaleProvider = Provider<Locale>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
+  final code = prefs.getString(_languageCodeKey);
   final savedLanguageCode = prefs.getString(_languageCodeKey);
 
   if (savedLanguageCode != null &&
@@ -39,7 +40,7 @@ final persistentLocaleProvider =
       final prefs = ref.watch(sharedPreferencesProvider);
       final initialLocale = ref.watch(savedLocaleProvider);
 
-      return PersistentLocaleNotifier(prefs, initialLocale);
+      return PersistentLocaleNotifier(prefs as SharedPreferences, initialLocale);
     });
 
 /// Notifier for managing the locale state with persistence

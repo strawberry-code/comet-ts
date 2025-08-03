@@ -5,6 +5,8 @@ import 'package:flutter_riverpod_clean_architecture/core/constants/app_constants
 import 'package:flutter_riverpod_clean_architecture/core/utils/app_review_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../providers/localization_providers.dart';
+
 /// Provider for the InAppReview instance
 final inAppReviewProvider = Provider<InAppReview>((ref) {
   return InAppReview.instance;
@@ -37,18 +39,13 @@ final shouldRequestReviewProvider = FutureProvider.autoDispose<bool>((
   return await reviewService.shouldRequestReview();
 });
 
-/// Provider for SharedPreferences - should be defined in your main.dart
-final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
-  throw UnimplementedError('SharedPreferencesProvider not initialized');
-});
-
 /// Smart review prompt that uses feedback before store reviews
 class SmartReviewPrompt extends ConsumerWidget {
   /// The child widget
   final Widget child;
 
   /// Create a smart review prompt
-  const SmartReviewPrompt({Key? key, required this.child}) : super(key: key);
+  const SmartReviewPrompt({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

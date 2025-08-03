@@ -16,14 +16,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize shared preferences
-  final sharedPreferences = await SharedPreferences.getInstance();
+  //final sharedPreferences = await SharedPreferences.getInstance();
+  final prefs = await SharedPreferences.getInstance();
 
   // Run the app with ProviderScope to enable Riverpod
   runApp(
     ProviderScope(
       overrides: [
         // Override the shared preferences provider with the instance
-        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+        sharedPreferencesProvider.overrideWithValue(prefs),
 
         // Override the default locale provider to use our persistent locale
         defaultLocaleProvider.overrideWith(
@@ -35,10 +36,6 @@ void main() async {
   );
 }
 
-// Provider for SharedPreferences
-final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
-  throw UnimplementedError();
-});
 
 // Provider to manage theme mode
 final themeModeProvider = StateProvider<ThemeMode>((ref) {

@@ -7,11 +7,12 @@ import 'package:flutter_riverpod_clean_architecture/core/network/api_client.dart
 import 'package:flutter_riverpod_clean_architecture/core/storage/local_storage_service.dart';
 import 'package:flutter_riverpod_clean_architecture/core/storage/secure_storage_service.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod_clean_architecture/main.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/data/models/user_model.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/domain/entities/user_entity.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/domain/repositories/auth_repository.dart';
+
+import '../../../../core/providers/localization_providers.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
