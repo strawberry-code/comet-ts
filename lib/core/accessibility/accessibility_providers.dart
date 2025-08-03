@@ -66,7 +66,7 @@ class AccessibilityWrapper extends ConsumerWidget {
   final Widget child;
 
   /// Create an accessibility wrapper
-  const AccessibilityWrapper({Key? key, required this.child}) : super(key: key);
+  const AccessibilityWrapper({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,11 +75,9 @@ class AccessibilityWrapper extends ConsumerWidget {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         // Apply font scaling if needed
-        textScaleFactor: settings.fontScale,
-        // Reduce animations if needed
         disableAnimations: settings.isReduceMotionEnabled,
         // Set high contrast if needed
-        highContrast: settings.isHighContrastEnabled,
+        highContrast: settings.isHighContrastEnabled, textScaler: TextScaler.linear(settings.fontScale),
         // Set bold text if needed
         boldText: settings.isBoldTextEnabled,
       ),

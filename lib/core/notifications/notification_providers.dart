@@ -45,10 +45,8 @@ final notificationServiceProvider = Provider<NotificationService>((ref) {
 
   // Dispose the service when the provider is disposed
   ref.onDispose(() {
-    if (service is DebugNotificationService) {
-      service.dispose();
-    }
-  });
+    service.dispose();
+    });
 
   return service;
 });

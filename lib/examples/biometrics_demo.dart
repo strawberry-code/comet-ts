@@ -6,7 +6,7 @@ import 'package:flutter_riverpod_clean_architecture/core/analytics/analytics_pro
 
 /// A widget that demonstrates the biometric authentication capabilities
 class BiometricsDemo extends ConsumerWidget {
-  const BiometricsDemo({Key? key}) : super(key: key);
+  const BiometricsDemo({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
