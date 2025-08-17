@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_clean_architecture/core/router/locale_aware_router.dart';
 import 'package:flutter_riverpod_clean_architecture/core/utils/app_utils.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/presentation/providers/auth_provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_constants.dart';
 
@@ -164,6 +165,26 @@ class HomeScreen extends ConsumerWidget {
                         color: Colors.purple,
                         onTap: () {},
                       ),
+                      // Add Project feature tile
+                      _buildFeatureTile(
+                        context,
+                        icon: Icons.assignment, // Or a more suitable icon
+                        title: 'Projects',
+                        color: Colors.teal, // Choose a suitable color
+                        onTap: () {
+                          GoRouter.of(context).go('/projects'); // Navigate to the projects list screen
+                        },
+                      ),
+                      // Add Employee feature tile
+                      _buildFeatureTile(
+                        context,
+                        icon: Icons.person, // Or a more suitable icon
+                        title: 'Employees',
+                        color: Colors.indigo, // Choose a suitable color
+                        onTap: () {
+                          GoRouter.of(context).go('/employees'); // Navigate to the employees list screen
+                        },
+                      ),
                     ],
                   ),
                   
@@ -285,6 +306,9 @@ class HomeScreen extends ConsumerWidget {
     required Color color,
     required VoidCallback onTap,
   }) {
+    // Explicitly import GoRouter here as a workaround
+    // This is NOT ideal, but for debugging this persistent issue
+    // ignore: unused_import
     return Card(
       elevation: 2,
       child: InkWell(

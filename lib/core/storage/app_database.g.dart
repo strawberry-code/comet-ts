@@ -397,19 +397,39 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
-  static const VerificationMeta _budgetHoursMeta = const VerificationMeta(
-    'budgetHours',
+  static const VerificationMeta _budgetMeta = const VerificationMeta('budget');
+  @override
+  late final GeneratedColumn<int> budget = GeneratedColumn<int>(
+    'budget',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startDateMeta = const VerificationMeta(
+    'startDate',
   );
   @override
-  late final GeneratedColumn<int> budgetHours = GeneratedColumn<int>(
-    'budget_hours',
+  late final GeneratedColumn<int> startDate = GeneratedColumn<int>(
+    'start_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endDateMeta = const VerificationMeta(
+    'endDate',
+  );
+  @override
+  late final GeneratedColumn<int> endDate = GeneratedColumn<int>(
+    'end_date',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, name, budgetHours];
+  List<GeneratedColumn> get $columns => [id, name, budget, startDate, endDate];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -433,16 +453,29 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('budget_hours')) {
+    if (data.containsKey('budget')) {
       context.handle(
-        _budgetHoursMeta,
-        budgetHours.isAcceptableOrUnknown(
-          data['budget_hours']!,
-          _budgetHoursMeta,
-        ),
+        _budgetMeta,
+        budget.isAcceptableOrUnknown(data['budget']!, _budgetMeta),
       );
     } else if (isInserting) {
-      context.missing(_budgetHoursMeta);
+      context.missing(_budgetMeta);
+    }
+    if (data.containsKey('start_date')) {
+      context.handle(
+        _startDateMeta,
+        startDate.isAcceptableOrUnknown(data['start_date']!, _startDateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startDateMeta);
+    }
+    if (data.containsKey('end_date')) {
+      context.handle(
+        _endDateMeta,
+        endDate.isAcceptableOrUnknown(data['end_date']!, _endDateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_endDateMeta);
     }
     return context;
   }
@@ -461,9 +494,17 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
-      budgetHours: attachedDatabase.typeMapping.read(
+      budget: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}budget_hours'],
+        data['${effectivePrefix}budget'],
+      )!,
+      startDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}start_date'],
+      )!,
+      endDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}end_date'],
       )!,
     );
   }
@@ -477,18 +518,24 @@ class $ProjectsTable extends Projects with TableInfo<$ProjectsTable, Project> {
 class Project extends DataClass implements Insertable<Project> {
   final int id;
   final String name;
-  final int budgetHours;
+  final int budget;
+  final int startDate;
+  final int endDate;
   const Project({
     required this.id,
     required this.name,
-    required this.budgetHours,
+    required this.budget,
+    required this.startDate,
+    required this.endDate,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
-    map['budget_hours'] = Variable<int>(budgetHours);
+    map['budget'] = Variable<int>(budget);
+    map['start_date'] = Variable<int>(startDate);
+    map['end_date'] = Variable<int>(endDate);
     return map;
   }
 
@@ -496,7 +543,9 @@ class Project extends DataClass implements Insertable<Project> {
     return ProjectsCompanion(
       id: Value(id),
       name: Value(name),
-      budgetHours: Value(budgetHours),
+      budget: Value(budget),
+      startDate: Value(startDate),
+      endDate: Value(endDate),
     );
   }
 
@@ -508,7 +557,9 @@ class Project extends DataClass implements Insertable<Project> {
     return Project(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
-      budgetHours: serializer.fromJson<int>(json['budgetHours']),
+      budget: serializer.fromJson<int>(json['budget']),
+      startDate: serializer.fromJson<int>(json['startDate']),
+      endDate: serializer.fromJson<int>(json['endDate']),
     );
   }
   @override
@@ -517,22 +568,32 @@ class Project extends DataClass implements Insertable<Project> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
-      'budgetHours': serializer.toJson<int>(budgetHours),
+      'budget': serializer.toJson<int>(budget),
+      'startDate': serializer.toJson<int>(startDate),
+      'endDate': serializer.toJson<int>(endDate),
     };
   }
 
-  Project copyWith({int? id, String? name, int? budgetHours}) => Project(
+  Project copyWith({
+    int? id,
+    String? name,
+    int? budget,
+    int? startDate,
+    int? endDate,
+  }) => Project(
     id: id ?? this.id,
     name: name ?? this.name,
-    budgetHours: budgetHours ?? this.budgetHours,
+    budget: budget ?? this.budget,
+    startDate: startDate ?? this.startDate,
+    endDate: endDate ?? this.endDate,
   );
   Project copyWithCompanion(ProjectsCompanion data) {
     return Project(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
-      budgetHours: data.budgetHours.present
-          ? data.budgetHours.value
-          : this.budgetHours,
+      budget: data.budget.present ? data.budget.value : this.budget,
+      startDate: data.startDate.present ? data.startDate.value : this.startDate,
+      endDate: data.endDate.present ? data.endDate.value : this.endDate,
     );
   }
 
@@ -541,58 +602,78 @@ class Project extends DataClass implements Insertable<Project> {
     return (StringBuffer('Project(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('budgetHours: $budgetHours')
+          ..write('budget: $budget, ')
+          ..write('startDate: $startDate, ')
+          ..write('endDate: $endDate')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, budgetHours);
+  int get hashCode => Object.hash(id, name, budget, startDate, endDate);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Project &&
           other.id == this.id &&
           other.name == this.name &&
-          other.budgetHours == this.budgetHours);
+          other.budget == this.budget &&
+          other.startDate == this.startDate &&
+          other.endDate == this.endDate);
 }
 
 class ProjectsCompanion extends UpdateCompanion<Project> {
   final Value<int> id;
   final Value<String> name;
-  final Value<int> budgetHours;
+  final Value<int> budget;
+  final Value<int> startDate;
+  final Value<int> endDate;
   const ProjectsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
-    this.budgetHours = const Value.absent(),
+    this.budget = const Value.absent(),
+    this.startDate = const Value.absent(),
+    this.endDate = const Value.absent(),
   });
   ProjectsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required int budgetHours,
+    required int budget,
+    required int startDate,
+    required int endDate,
   }) : name = Value(name),
-       budgetHours = Value(budgetHours);
+       budget = Value(budget),
+       startDate = Value(startDate),
+       endDate = Value(endDate);
   static Insertable<Project> custom({
     Expression<int>? id,
     Expression<String>? name,
-    Expression<int>? budgetHours,
+    Expression<int>? budget,
+    Expression<int>? startDate,
+    Expression<int>? endDate,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
-      if (budgetHours != null) 'budget_hours': budgetHours,
+      if (budget != null) 'budget': budget,
+      if (startDate != null) 'start_date': startDate,
+      if (endDate != null) 'end_date': endDate,
     });
   }
 
   ProjectsCompanion copyWith({
     Value<int>? id,
     Value<String>? name,
-    Value<int>? budgetHours,
+    Value<int>? budget,
+    Value<int>? startDate,
+    Value<int>? endDate,
   }) {
     return ProjectsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
-      budgetHours: budgetHours ?? this.budgetHours,
+      budget: budget ?? this.budget,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
     );
   }
 
@@ -605,8 +686,14 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (budgetHours.present) {
-      map['budget_hours'] = Variable<int>(budgetHours.value);
+    if (budget.present) {
+      map['budget'] = Variable<int>(budget.value);
+    }
+    if (startDate.present) {
+      map['start_date'] = Variable<int>(startDate.value);
+    }
+    if (endDate.present) {
+      map['end_date'] = Variable<int>(endDate.value);
     }
     return map;
   }
@@ -616,7 +703,9 @@ class ProjectsCompanion extends UpdateCompanion<Project> {
     return (StringBuffer('ProjectsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('budgetHours: $budgetHours')
+          ..write('budget: $budget, ')
+          ..write('startDate: $startDate, ')
+          ..write('endDate: $endDate')
           ..write(')'))
         .toString();
   }
@@ -1626,13 +1715,17 @@ typedef $$ProjectsTableCreateCompanionBuilder =
     ProjectsCompanion Function({
       Value<int> id,
       required String name,
-      required int budgetHours,
+      required int budget,
+      required int startDate,
+      required int endDate,
     });
 typedef $$ProjectsTableUpdateCompanionBuilder =
     ProjectsCompanion Function({
       Value<int> id,
       Value<String> name,
-      Value<int> budgetHours,
+      Value<int> budget,
+      Value<int> startDate,
+      Value<int> endDate,
     });
 
 final class $$ProjectsTableReferences
@@ -1677,8 +1770,18 @@ class $$ProjectsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get budgetHours => $composableBuilder(
-    column: $table.budgetHours,
+  ColumnFilters<int> get budget => $composableBuilder(
+    column: $table.budget,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get startDate => $composableBuilder(
+    column: $table.startDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get endDate => $composableBuilder(
+    column: $table.endDate,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1727,8 +1830,18 @@ class $$ProjectsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get budgetHours => $composableBuilder(
-    column: $table.budgetHours,
+  ColumnOrderings<int> get budget => $composableBuilder(
+    column: $table.budget,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get startDate => $composableBuilder(
+    column: $table.startDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get endDate => $composableBuilder(
+    column: $table.endDate,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -1748,10 +1861,14 @@ class $$ProjectsTableAnnotationComposer
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumn<int> get budgetHours => $composableBuilder(
-    column: $table.budgetHours,
-    builder: (column) => column,
-  );
+  GeneratedColumn<int> get budget =>
+      $composableBuilder(column: $table.budget, builder: (column) => column);
+
+  GeneratedColumn<int> get startDate =>
+      $composableBuilder(column: $table.startDate, builder: (column) => column);
+
+  GeneratedColumn<int> get endDate =>
+      $composableBuilder(column: $table.endDate, builder: (column) => column);
 
   Expression<T> allocationsRefs<T extends Object>(
     Expression<T> Function($$AllocationsTableAnnotationComposer a) f,
@@ -1809,21 +1926,29 @@ class $$ProjectsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
-                Value<int> budgetHours = const Value.absent(),
+                Value<int> budget = const Value.absent(),
+                Value<int> startDate = const Value.absent(),
+                Value<int> endDate = const Value.absent(),
               }) => ProjectsCompanion(
                 id: id,
                 name: name,
-                budgetHours: budgetHours,
+                budget: budget,
+                startDate: startDate,
+                endDate: endDate,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String name,
-                required int budgetHours,
+                required int budget,
+                required int startDate,
+                required int endDate,
               }) => ProjectsCompanion.insert(
                 id: id,
                 name: name,
-                budgetHours: budgetHours,
+                budget: budget,
+                startDate: startDate,
+                endDate: endDate,
               ),
           withReferenceMapper: (p0) => p0
               .map(

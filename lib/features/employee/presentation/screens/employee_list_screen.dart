@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod_clean_architecture/features/project/domain/entities/project_entity.dart';
-import 'package:flutter_riverpod_clean_architecture/features/project/presentation/providers/project_providers.dart';
-import 'package:flutter_riverpod_clean_architecture/features/project/domain/usecases/delete_project.dart'; // Import DeleteProjectParams
+import 'package:flutter_riverpod_clean_architecture/features/employee/domain/entities/employee_entity.dart';
+import 'package:flutter_riverpod_clean_architecture/features/employee/presentation/providers/employee_providers.dart';
+import 'package:flutter_riverpod_clean_architecture/features/employee/domain/usecases/delete_employee.dart';
 
-class ProjectListScreen extends ConsumerWidget {
-  const ProjectListScreen({super.key});
+class EmployeeListScreen extends ConsumerWidget {
+  const EmployeeListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final projectsAsync = ref.watch(projectsListProvider);
+    final employeesAsync = ref.watch(employeesListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Projects'),
+        title: const Text('Employees'),
         leading: IconButton( // Explicitly add a back button
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -25,44 +25,44 @@ class ProjectListScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // Navigate to add project screen
-              context.go('/projects/add');
+              // Navigate to add employee screen
+              context.go('/employees/add');
             },
           ),
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(projectsListProvider);
+          ref.invalidate(employeesListProvider);
         },
-        child: projectsAsync.when(
-          data: (projects) {
-            if (projects.isEmpty) {
+        child: employeesAsync.when(
+          data: (employees) {
+            if (employees.isEmpty) {
               return ListView(
                 children: const [
                   Center(
-                    child: Text('No projects yet. Add one!'),
+                    child: Text('No employees yet. Add one!'),
                   ),
                 ],
               );
             }
             return ListView.builder(
-              itemCount: projects.length,
+              itemCount: employees.length,
               itemBuilder: (context, index) {
-                final project = projects[index];
+                final employee = employees[index];
                 return ListTile(
-                  title: Text(project.name),
-                  subtitle: Text('Budget: ${project.budget}'),
+                  title: Text(employee.name),
+                  subtitle: Text('Level ID: ${employee.levelId}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
-                      // Navigate to edit project screen
-                      context.go('/projects/${project.id}');
+                      // Navigate to edit employee screen
+                      context.go('/employees/${employee.id}');
                     },
                   ),
                   onLongPress: () {
                     // Show delete confirmation dialog
-                    ProjectListScreen._confirmDelete(context, ref, project);
+                    EmployeeListScreen._confirmDelete(context, ref, employee);
                   },
                 );
               },
@@ -75,12 +75,12 @@ class ProjectListScreen extends ConsumerWidget {
     );
   }
 
-  static void _confirmDelete(BuildContext context, WidgetRef ref, ProjectEntity project) {
+  static void _confirmDelete(BuildContext context, WidgetRef ref, EmployeeEntity employee) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Project'),
-        content: Text('Are you sure you want to delete ${project.name}?'),
+        title: const Text('Delete Employee'),
+        content: Text('Are you sure you want to delete ${employee.name}?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -88,7 +88,7 @@ class ProjectListScreen extends ConsumerWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              ref.read(deleteProjectUseCaseProvider).call(DeleteProjectParams(id: project.id));
+              ref.read(deleteEmployeeUseCaseProvider).call(DeleteEmployeeParams(id: employee.id));
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),

@@ -6,18 +6,40 @@ class ProjectModel extends ProjectEntity {
   const ProjectModel({
     required int id,
     required String name,
-    required int budgetHours,
+    required int budget,
+    required int startDate,
+    required int endDate,
   }) : super(
           id: id,
           name: name,
-          budgetHours: budgetHours,
+          budget: budget,
+          startDate: startDate,
+          endDate: endDate,
         );
+
+  // Factory constructor for creating new projects without an ID
+  factory ProjectModel.create({
+    required String name,
+    required int budget,
+    required int startDate,
+    required int endDate,
+  }) {
+    return ProjectModel(
+      id: 0, // Temporary ID, will be replaced by DB auto-increment
+      name: name,
+      budget: budget,
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
 
   factory ProjectModel.fromDrift(Project project) {
     return ProjectModel(
       id: project.id,
       name: project.name,
-      budgetHours: project.budgetHours,
+      budget: project.budget,
+      startDate: project.startDate,
+      endDate: project.endDate,
     );
   }
 
@@ -25,7 +47,9 @@ class ProjectModel extends ProjectEntity {
     return ProjectsCompanion(
       id: Value(id),
       name: Value(name),
-      budgetHours: Value(budgetHours),
+      budget: Value(budget), // Renamed
+      startDate: Value(startDate), // New
+      endDate: Value(endDate), // New
     );
   }
 
@@ -34,7 +58,9 @@ class ProjectModel extends ProjectEntity {
     return ProjectModel(
       id: json['id'] as int,
       name: json['name'] as String,
-      budgetHours: json['budgetHours'] as int,
+      budget: json['budget'] as int, // Renamed
+      startDate: json['startDate'] as int, // New
+      endDate: json['endDate'] as int, // New
     );
   }
 
@@ -42,7 +68,26 @@ class ProjectModel extends ProjectEntity {
     return {
       'id': id,
       'name': name,
-      'budgetHours': budgetHours,
+      'budget': budget, // Renamed
+      'startDate': startDate, // New
+      'endDate': endDate, // New
     };
+  }
+
+  @override
+  ProjectModel copyWith({
+    int? id,
+    String? name,
+    int? budget,
+    int? startDate,
+    int? endDate,
+  }) {
+    return ProjectModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      budget: budget ?? this.budget,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+    );
   }
 }

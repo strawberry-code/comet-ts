@@ -6,6 +6,8 @@ This section will be updated prompt-by-prompt with the user's requirements.
 
 *   **2025-08-17:** The user wants to implement the database schema for the Comet TS application, based on the `PROJECT_PLAN.md` file. The schema should be simple, intelligent, and only include what is necessary to achieve the goals.
 *   **2025-08-17:** The user wants to integrate the `User` concept with the existing login and registration flow, and remove the separate "User" button and "Users" list from the UI.
+*   **2025-08-17:** The user wants Project Budget to be defined in EURO (€) and allow decimal values with two decimal places (e.g., 123.23).
+*   **2025-08-17:** The user wants to ensure project names are unique, without using them as IDs.
 
 ## Implementation History
 
@@ -18,16 +20,6 @@ This section provides a brief history of implementation decisions.
         -   Created `test/features/auth/auth_test.dart` with comprehensive unit tests for `AuthRepositoryImpl`.
         -   Utilized `mocktail` for mocking dependencies.
         -   Covered scenarios for successful registration, existing user registration, successful login, invalid credentials, non-existent user login, successful logout, and logout failures.
-
-*   **2025-08-17:**
-    *   **What:** Integrated missing dependencies.
-    *   **Why:** To lay the groundwork for future features like local notifications, biometrics, and OIDC authentication as per the project plan.
-    *   **How:**
-        -   `flutter_local_notifications`: Added to `pubspec.yaml` and initialized in `main.dart` with Android notification channel setup.
-        -   `local_auth`: Added necessary `USE_BIOMETRIC` permission to `AndroidManifest.xml` and `NSFaceIDUsageDescription` to `Info.plist`.
-        -   `flutter_appauth`: Added placeholder URL schemes for iOS in `Info.plist` and a generic `intent-filter` for Android in `AndroidManifest.xml`.
-        -   `google_sign_in`: Added `google-signin-client_id` meta tag to `web/index.html`.
-        -   `sign_in_with_apple`: Added a comment to `Info.plist` reminding to enable "Sign In with Apple" capability in Xcode.
 
 *   **2025-08-17:**
     *   **What:** Integrated missing dependencies.
@@ -89,10 +81,47 @@ This section provides a brief history of implementation decisions.
         12. Added `deleteAllUsers` functionality (method, use case, provider, and debug button) to clear user data.
         13. Added logging to `AuthRepositoryImpl.register` and `AuthRepositoryImpl.login` to trace `passwordHash` values.
 
+*   **2025-08-17:**
+    *   **What:** Implemented Project CRUD feature.
+    *   **Why:** To manage projects as per `PROJECT_PLAN.md`.
+    *   **How:**
+        1.  Updated `ProjectEntity`, `ProjectModel`, and Drift schema to include `budget`, `startDate`, and `endDate`.
+        2.  Implemented `ProjectLocalDataSource` and `ProjectRepository`.
+        3.  Implemented Project Use Cases and Providers.
+        4.  Implemented `ProjectListScreen` and `ProjectDetailScreen` (Add/Edit).
+        5.  Integrated Project routes into `AppRouter` and added a tile to `HomeScreen`.
+        6.  Added logging to data source and repository layers.
+        7.  Improved error messages in `ProjectDetailScreen` to use `failure.message`.
+        8.  Fixed `UNIQUE constraint failed` error by using `ProjectModel.create` factory constructor.
+        9.  Adjusted navigation in `ProjectDetailScreen` to use `context.pop()` for back, cancel, and after successful save/update.
+        10. Explicitly added a back button to `ProjectDetailScreen`'s `AppBar`.
+        11. Added a back button to `ProjectListScreen`'s `AppBar`.
+
+*   **2025-08-17:**
+    *   **What:** Implemented Employee CRUD feature.
+    *   **Why:** To manage employees as per `PROJECT_PLAN.md`.
+    *   **How:**
+        1.  Created `EmployeeEntity`, `EmployeeModel`.
+        2.  Created `EmployeeLocalDataSource` and `EmployeeRepository`.
+        3.  Created Employee Use Cases and Providers.
+        4.  Implemented `EmployeeListScreen` and `EmployeeDetailScreen` (Add/Edit).
+        5.  Integrated Employee routes into `AppRouter` and added a tile to `HomeScreen`.
+        6.  Added logging to data source and repository layers.
+
+*   **2025-08-17:**
+    *   **What:** Ongoing work on Project Budget field.
+    *   **Why:** To define budget in EURO (€) with two decimal places.
+    *   **How:**
+        1.  Modified `ProjectDetailScreen` to handle decimal budget input and conversion to/from cents.
+
 ## Project State
 
 This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
-*   **Last Action:** All compilation errors related to database integration and authentication refactoring have been resolved. The app builds successfully.
-*   **Next Action:** Implement CRUD screens for projects & employees, then the Allocation screen.
+*   **Last Action:** Ongoing work on Project Budget field (decimal and Euro).
+*   **Next Action:**
+    1.  Complete Project Budget field implementation (update `ProjectListScreen` for Euro display).
+    2.  Test Project CRUD functionality with new budget field.
+    3.  Test Employee CRUD functionality.
+    4.  Address any remaining UI/UX issues (e.g., back button animation).

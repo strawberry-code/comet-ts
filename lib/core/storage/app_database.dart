@@ -21,7 +21,9 @@ class Users extends Table {
 class Projects extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().unique()();
-  IntColumn get budgetHours => integer()();
+  IntColumn get budget => integer()(); // Renamed from budgetHours
+  IntColumn get startDate => integer()(); // New field for Unix timestamp
+  IntColumn get endDate => integer()(); // New field for Unix timestamp
 }
 
 class Levels extends Table {
