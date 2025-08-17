@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod_clean_architecture/features/project/presentation/screens/project_list_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/project/presentation/screens/project_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_clean_architecture/core/constants/app_constants.dart';
@@ -54,6 +56,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppConstants.homeRoute,
         name: 'home',
         builder: (context, state) => const HomeScreen(),
+      ),
+
+      // Project List route
+      GoRoute(
+        path: '/projects',
+        name: 'projects',
+        builder: (context, state) => const ProjectListScreen(),
+      ),
+
+      // Project Detail route (Add/Edit)
+      GoRoute(
+        path: '/projects/:id',
+        name: 'project_detail',
+        builder: (context, state) => ProjectDetailScreen(projectId: state.pathParameters['id'] == 'add' ? null : int.parse(state.pathParameters['id']!)),
       ),
 
       // Login route
