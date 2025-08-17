@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod_clean_architecture/core/storage/app_database.dart';
+import 'package:flutter_riverpod_clean_architecture/core/storage/app_database.dart'; // Keep this for AppDatabase class
+import 'package:flutter_riverpod_clean_architecture/core/providers/database_provider.dart'; // New import for appDatabaseProvider
+
 import 'package:flutter_riverpod_clean_architecture/core/usecases/usecase.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/data/datasources/employee_local_data_source.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/data/repositories/employee_repository_impl.dart';

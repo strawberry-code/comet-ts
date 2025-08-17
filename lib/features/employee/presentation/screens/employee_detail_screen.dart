@@ -79,7 +79,7 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Employee created successfully!')),
             );
-            context.pop(); // Go back to employee list
+            context.go('/employees'); // Changed from context.pop()
           },
         );
       } else {
@@ -100,7 +100,7 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Employee updated successfully!')),
             );
-            context.pop(); // Go back to employee list
+            context.go('/employees'); // Changed from context.pop()
           },
         );
       }
@@ -113,10 +113,11 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.employeeId == null ? 'Add Employee' : 'Edit Employee'),
+        automaticallyImplyLeading: false, // Explicitly set to false
         leading: IconButton( // Explicitly add a back button
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.pop(); // Navigate back using pop
+            context.go('/employees'); // Changed from context.pop()
           },
         ),
       ),
@@ -160,7 +161,7 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.pop();
+                      context.go('/employees'); // Changed from context.pop()
                     },
                     child: const Text('Cancel'),
                   ),

@@ -93,7 +93,7 @@ This section provides a brief history of implementation decisions.
         6.  Added logging to data source and repository layers.
         7.  Improved error messages in `ProjectDetailScreen` to use `failure.message`.
         8.  Fixed `UNIQUE constraint failed` error by using `ProjectModel.create` factory constructor.
-        9.  Adjusted navigation in `ProjectDetailScreen` to use `context.pop()` for back, cancel, and after successful save/update.
+        9.  Adjusted navigation in `ProjectDetailScreen` to use `context.go('/projects')` for back, cancel, and after successful save/update.
         10. Explicitly added a back button to `ProjectDetailScreen`'s `AppBar`.
         11. Added a back button to `ProjectListScreen`'s `AppBar`.
 
@@ -107,21 +107,23 @@ This section provides a brief history of implementation decisions.
         4.  Implemented `EmployeeListScreen` and `EmployeeDetailScreen` (Add/Edit).
         5.  Integrated Employee routes into `AppRouter` and added a tile to `HomeScreen`.
         6.  Added logging to data source and repository layers.
+        7.  Fixed `Undefined name 'appDatabaseProvider'` error by creating `lib/core/providers/database_provider.dart` and updating imports in `project_providers.dart` and `employee_providers.dart`.
+        8.  Adjusted navigation in `EmployeeDetailScreen` to use `context.go('/employees')` for back, cancel, and after successful save/update.
 
 *   **2025-08-17:**
-    *   **What:** Ongoing work on Project Budget field.
+    *   **What:** Completed Project Budget field implementation.
     *   **Why:** To define budget in EURO (€) with two decimal places.
     *   **How:**
         1.  Modified `ProjectDetailScreen` to handle decimal budget input and conversion to/from cents.
+        2.  Updated `ProjectListScreen` to display budget in Euros with two decimal places.
 
 ## Project State
 
 This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
-*   **Last Action:** Ongoing work on Project Budget field (decimal and Euro).
+*   **Last Action:** Completed Project Budget field implementation and fixed Employee navigation issues.
 *   **Next Action:**
-    1.  Complete Project Budget field implementation (update `ProjectListScreen` for Euro display).
-    2.  Test Project CRUD functionality with new budget field.
-    3.  Test Employee CRUD functionality.
-    4.  Address any remaining UI/UX issues (e.g., back button animation).
+    1.  Test Project CRUD functionality with new budget field.
+    2.  Test Employee CRUD functionality.
+    3.  Implement Allocation screen with validation (from Sprint 1).

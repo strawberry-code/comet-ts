@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod_clean_architecture/core/storage/app_database.dart';
+import 'package:flutter_riverpod_clean_architecture/core/storage/app_database.dart'; // Keep this for AppDatabase class
+import 'package:flutter_riverpod_clean_architecture/core/providers/database_provider.dart'; // New import for appDatabaseProvider
 import 'package:flutter_riverpod_clean_architecture/core/usecases/usecase.dart';
 import 'package:flutter_riverpod_clean_architecture/features/project/data/datasources/project_local_data_source.dart';
 import 'package:flutter_riverpod_clean_architecture/features/project/data/repositories/project_repository_impl.dart';
@@ -49,10 +50,7 @@ final deleteProjectUseCaseProvider = Provider<DeleteProject>((ref) {
   return DeleteProject(repository);
 });
 
-// AppDatabase Provider (assuming it's defined elsewhere, e.g., core/storage/app_database.dart)
-final appDatabaseProvider = Provider<AppDatabase>((ref) {
-  return AppDatabase();
-});
+
 
 // Projects List Provider
 final projectsListProvider = FutureProvider.autoDispose<List<ProjectEntity>>((ref) async {

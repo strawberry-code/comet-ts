@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import for FilteringTextInputFormatter
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod_clean_architecture/features/project/domain/entities/project_entity.dart';
@@ -22,9 +22,9 @@ class ProjectDetailScreen extends ConsumerStatefulWidget {
 class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  late TextEditingController _budgetController; // Renamed
-  late TextEditingController _startDateController; // New
-  late TextEditingController _endDateController; // New
+  late TextEditingController _budgetController;
+  late TextEditingController _startDateController;
+  late TextEditingController _endDateController;
 
   DateTime? _selectedStartDate;
   DateTime? _selectedEndDate;
@@ -50,7 +50,7 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
           (project) {
             if (project != null) {
               _nameController.text = project.name;
-              _budgetController.text = project.budget.toString(); // Renamed
+              _budgetController.text = (project.budget / 100).toStringAsFixed(2); // Convert cents to double for display
               _selectedStartDate = DateTime.fromMillisecondsSinceEpoch(project.startDate);
               _startDateController.text = DateFormat('yyyy-MM-dd').format(_selectedStartDate!);
               _selectedEndDate = DateTime.fromMillisecondsSinceEpoch(project.endDate);
@@ -93,9 +93,10 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
   void _saveProject() async {
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text;
-      final budget = int.parse(_budgetController.text); // Renamed
-      final startDate = _selectedStartDate?.millisecondsSinceEpoch; // New
-      final endDate = _selectedEndDate?.millisecondsSinceEpoch; // New
+      final budgetDouble = double.tryParse(_budgetController.text);
+      final budget = (budgetDouble! * 100).toInt(); // Convert double to cents (int)
+      final startDate = _selectedStartDate?.millisecondsSinceEpoch;
+      final endDate = _selectedEndDate?.millisecondsSinceEpoch;
 
       if (startDate == null || endDate == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -124,7 +125,7 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Project created successfully!')),
             );
-            context.pop(); // Go back to project list
+            context.go('/projects'); // Changed from context.pop()
           },
         );
       } else {
@@ -147,7 +148,7 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Project updated successfully!')),
             );
-            context.pop(); // Go back to project list
+            context.go('/projects'); // Changed from context.pop()
           },
         );
       }
@@ -160,12 +161,11 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.projectId == null ? 'Add Project' : 'Edit Project'),
-        automaticallyImplyLeading: false, // Explicitly set to false
-        leading: IconButton( // Explicitly add a back button
+        automaticallyImplyLeading: false,
+        leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Use context.pop() for the back button
-            context.pop();
+            context.go('/projects'); // Changed from context.pop()
           },
         ),
       ),
@@ -186,15 +186,19 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
                 },
               ),
               TextFormField(
-                controller: _budgetController, // Renamed
-                decoration: const InputDecoration(labelText: 'Budget'), // Renamed label
-                keyboardType: TextInputType.number,
+                controller: _budgetController,
+                decoration: const InputDecoration(labelText: 'Budget (€)'), // Updated label
+                keyboardType: TextInputType.numberWithOptions(decimal: true), // Allow decimal input
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$')), // Allow up to 2 decimal places
+                ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter budget';
                   }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
+                  final budgetValue = double.tryParse(value);
+                  if (budgetValue == null || budgetValue <= 0) { // Check for valid positive number
+                    return 'Please enter a valid positive number';
                   }
                   return null;
                 },
@@ -239,7 +243,7 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.pop(); // Changed from context.go('/projects')
+                      context.go('/projects'); // Changed from context.pop()
                     },
                     child: const Text('Cancel'),
                   ),

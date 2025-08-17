@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod_clean_architecture/features/project/domain/entities/project_entity.dart';
 import 'package:flutter_riverpod_clean_architecture/features/project/presentation/providers/project_providers.dart';
-import 'package:flutter_riverpod_clean_architecture/features/project/domain/usecases/delete_project.dart'; // Import DeleteProjectParams
+import 'package:flutter_riverpod_clean_architecture/features/project/domain/usecases/delete_project.dart';
+import 'package:intl/intl.dart'; // Import DeleteProjectParams
 
 class ProjectListScreen extends ConsumerWidget {
   const ProjectListScreen({super.key});
@@ -52,7 +53,7 @@ class ProjectListScreen extends ConsumerWidget {
                 final project = projects[index];
                 return ListTile(
                   title: Text(project.name),
-                  subtitle: Text('Budget: ${project.budget}'),
+                  subtitle: Text('Budget: ${NumberFormat.currency(locale: 'en_US', symbol: '€', decimalDigits: 2).format(project.budget / 100)}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
