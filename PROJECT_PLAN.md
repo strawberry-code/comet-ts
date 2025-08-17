@@ -28,16 +28,16 @@ A **mobile‑only, fully offline timesheet manager** designed primarily as a **p
 
 ## 3 · Epics & User Stories
 
-| Epic              | User Story                                                                                                                                    | MoSCoW | Status |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------ |
-| Authentication    | As a **manager**, I unlock the app via Face ID, or optional username/password; future Apple/Google sign‑in ready                              | Must   | To Do  |
-| Hour Allocation   | As a **manager**, I assign project hours to employees                                                                                         | Must   | To Do  |
-| Overtime Settings | As a **manager**, I configure whether overtime is allowed                                                                                     | Should | To Do  |
-| Reporting         | As a **manager**, I export monthly hours as CSV/PDF/Excel                                                                                     | Must   | To Do  |
-| User Storage      | As a **manager**, I can set a username and optional password; app auto‑opens if no password set; settings let me toggle password or wipe data | Must   | To Do  |
-| Notifications     | As a **manager**, I receive a local reminder if I haven’t allocated hours by 17:00                                                            | Could  | To Do  |
-| Encryption Toggle | As a **manager**, I enable biometric encryption of local data                                                                                 | Could  | To Do  |
-| Cloud‑Ready Layer | As a **developer**, I can swap the local DB with a remote API without rewriting UI                                                            | Should | To Do  |
+| Epic              | User Story                                                                                                                                    | MoSCoW | Status       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------ |
+| Authentication    | As a **manager**, I unlock the app via Face ID, or optional username/password; future Apple/Google sign‑in ready                              | Must   | In Progress  |
+| Hour Allocation   | As a **manager**, I assign project hours to employees                                                                                         | Must   | To Do        |
+| Overtime Settings | As a **manager**, I configure whether overtime is allowed                                                                                     | Should | To Do        |
+| Reporting         | As a **manager**, I export monthly hours as CSV/PDF/Excel                                                                                     | Must   | To Do        |
+| User Storage      | As a **manager**, I can set a username and optional password; app auto‑opens if no password set; settings let me toggle password or wipe data | Must   | To Do        |
+| Notifications     | As a **manager**, I receive a local reminder if I haven’t allocated hours by 17:00                                                            | Could  | To Do        |
+| Encryption Toggle | As a **manager**, I enable biometric encryption of local data                                                                                 | Could  | To Do        |
+| Cloud‑Ready Layer | As a **developer**, I can swap the local DB with a remote API without rewriting UI                                                            | Should | To Do        |
 
 ---
 
@@ -74,7 +74,7 @@ A **mobile‑only, fully offline timesheet manager** designed primarily as a **p
 | Sprint                         | Key Tasks                                                                                                                                                                                                                                          |
 | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **0 – Setup**                  | ‑ **Fork ssoad/flutter\_riverpod\_clean\_architecture** to `comet-ts` · Rename bundle id & app name · Strip demo features · Switch theme to B\&W · Add Drift + SQLCipher deps (demo uses them already) · Configure GitHub Actions & fastlane stubs |
-| **1 – Core workflow**          | ‑ Implement auth (PIN/Biometrics + optional password) · Local user storage CRUD · **Define DB schema (projects, employees, levels, allocations) [DONE]** · **Write tests for DB schema [DONE]** · CRUD screens for projects & employees · Allocation screen with validation (≤8 h, budget)           |
+| **1 – Core workflow**          | ‑ **Implement auth (PIN/Biometrics + optional password) [DONE]** · **Local user storage CRUD [DONE]** · Define DB schema (projects, employees, levels, allocations) [DONE] · Write tests for DB schema [DONE] · CRUD screens for projects & employees · Allocation screen with validation (≤8 h, budget)           |
 | **2 – Config & notifications** | ‑ Settings screen (overtime toggle, encryption toggle) · Implement encryption wrapper in Drift · Schedule daily reminder via `flutter_local_notifications`                                                                                         |
 | **3 – Reporting & polish**     | ‑ Export services (CSV, Excel, PDF) · Coverage dashboard (calendar + table) · UI final polish (B\&W theme) · Store localization IT/EN · Optional App Icon / Splash                                                                                 |
 
@@ -95,8 +95,7 @@ A **mobile‑only, fully offline timesheet manager** designed primarily as a **p
 
 ## 7 · Next Actions
 
-1. **Fork** ssoad/flutter\_riverpod\_clean\_architecture as `comet-ts`.
-2. Rename package, clean demo code, add B\&W theme.
-3. Integrate missing deps (`local_auth`, `flutter_local_notifications`, OIDC libs).
-4. Generate initial DB schema in Drift and run build runner.
-5. Push first passing CI build (Sprint 0 complete).
+1. Integrate remaining missing dependencies (e.g., `local_auth`, `flutter_local_notifications`, OIDC libs if not already done).
+2. Implement CRUD screens for projects & employees (from Sprint 1).
+3. Implement Allocation screen with validation (from Sprint 1).
+4. Begin Sprint 2 tasks: Settings screen (overtime toggle, encryption toggle) and local notifications.
