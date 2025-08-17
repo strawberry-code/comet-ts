@@ -12,6 +12,16 @@ This section will be updated prompt-by-prompt with the user's requirements.
 This section provides a brief history of implementation decisions.
 
 *   **2025-08-17:**
+    *   **What:** Integrated missing dependencies.
+    *   **Why:** To lay the groundwork for future features like local notifications, biometrics, and OIDC authentication as per the project plan.
+    *   **How:**
+        -   `flutter_local_notifications`: Added to `pubspec.yaml` and initialized in `main.dart` with Android notification channel setup.
+        -   `local_auth`: Added necessary `USE_BIOMETRIC` permission to `AndroidManifest.xml` and `NSFaceIDUsageDescription` to `Info.plist`.
+        -   `flutter_appauth`: Added placeholder URL schemes for iOS in `Info.plist` and a generic `intent-filter` for Android in `AndroidManifest.xml`.
+        -   `google_sign_in`: Added `google-signin-client_id` meta tag to `web/index.html`.
+        -   `sign_in_with_apple`: Added a comment to `Info.plist` reminding to enable "Sign In with Apple" capability in Xcode.
+
+*   **2025-08-17:**
     *   **What:** Resolved Flutter app errors and improved user management.
     *   **Why:** To fix critical errors preventing the application from building and functioning correctly, and to ensure the user management flow is stable.
     *   **How:**
