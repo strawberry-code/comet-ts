@@ -81,6 +81,20 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
   }
 
+  // Login with biometrics
+  Future<void> loginWithBiometrics(UserEntity user) async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    // In a real application, you might fetch user data from a local storage
+    // or a secure element associated with the biometric ID.
+    // For now, we'll assume the UserEntity is passed in.
+    state = state.copyWith(
+      isLoading: false,
+      isAuthenticated: true,
+      user: user,
+      errorMessage: null,
+    );
+  }
+
   // Register
   Future<void> register({
     required String username,

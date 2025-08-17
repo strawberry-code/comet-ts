@@ -150,12 +150,29 @@ This section provides a brief history of implementation decisions.
         10. Ensured back arrow in `UserDetailScreen` navigates to `SettingsScreen`.
         11. Removed "Localization demos" `ListTile` from `SettingsScreen`.
 
+*   **2025-08-17:**
+    *   **What:** Implemented biometric authentication and pre-filled username for login.
+    *   **Why:** To provide a convenient and secure login method and improve user experience.
+    *   **How:**
+        *   Added `local_auth` and `shared_preferences` dependencies.
+        *   Implemented `_checkBiometrics` and `_authenticateWithBiometrics` in `login_screen.dart`.
+        *   Added `loginWithBiometrics` to `AuthNotifier` to handle authentication state update.
+        *   Modified `_login` to save the last successfully logged-in username.
+        *   Modified `initState` to load and pre-fill the username field.
+        *   Ensured navigation to `homeRoute` after successful biometric login.
+        *   Corrected `UserEntity` ID type from `String` to `int` in `login_screen.dart`.
+
+*   **2025-08-17:**
+    *   **What:** Fixed Register page back navigation.
+    *   **Why:** To ensure the back arrow consistently navigates to the Login page.
+    *   **How:** Changed `context.pop()` to `context.go(AppConstants.loginRoute)` for the back arrow's `onPressed` action in `register_screen.dart`.
+
 ## Project State
 
 This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
-*   **Last Action:** Implemented "Edit User" functionality and UI/UX improvements.
+*   **Last Action:** Fixed Register page back navigation.
 *   **Next Action:**
     1.  Pre-populate `Levels` table with default values.
     2.  Modify Employee creation/editing to use a Dropdown for Level selection.

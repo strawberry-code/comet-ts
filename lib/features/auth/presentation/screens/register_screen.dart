@@ -67,6 +67,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.go(AppConstants.loginRoute);
+          },
+        ),
         title: const Text('Register'),
       ),
       body: Padding(
