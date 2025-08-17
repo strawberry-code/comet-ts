@@ -12,6 +12,24 @@ This section will be updated prompt-by-prompt with the user's requirements.
 This section provides a brief history of implementation decisions.
 
 *   **2025-08-17:**
+    *   **What:** Implemented regression tests for auth module.
+    *   **Why:** To ensure the stability and correctness of the core authentication functionalities (login, logout, register).
+    *   **How:**
+        -   Created `test/features/auth/auth_test.dart` with comprehensive unit tests for `AuthRepositoryImpl`.
+        -   Utilized `mocktail` for mocking dependencies.
+        -   Covered scenarios for successful registration, existing user registration, successful login, invalid credentials, non-existent user login, successful logout, and logout failures.
+
+*   **2025-08-17:**
+    *   **What:** Integrated missing dependencies.
+    *   **Why:** To lay the groundwork for future features like local notifications, biometrics, and OIDC authentication as per the project plan.
+    *   **How:**
+        -   `flutter_local_notifications`: Added to `pubspec.yaml` and initialized in `main.dart` with Android notification channel setup.
+        -   `local_auth`: Added necessary `USE_BIOMETRIC` permission to `AndroidManifest.xml` and `NSFaceIDUsageDescription` to `Info.plist`.
+        -   `flutter_appauth`: Added placeholder URL schemes for iOS in `Info.plist` and a generic `intent-filter` for Android in `AndroidManifest.xml`.
+        -   `google_sign_in`: Added `google-signin-client_id` meta tag to `web/index.html`.
+        -   `sign_in_with_apple`: Added a comment to `Info.plist` reminding to enable "Sign In with Apple" capability in Xcode.
+
+*   **2025-08-17:**
     *   **What:** Integrated missing dependencies.
     *   **Why:** To lay the groundwork for future features like local notifications, biometrics, and OIDC authentication as per the project plan.
     *   **How:**
@@ -77,4 +95,4 @@ This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
 *   **Last Action:** All compilation errors related to database integration and authentication refactoring have been resolved. The app builds successfully.
-*   **Next Action:** Manual testing of the login and registration flow by the user, with a focus on using the new debug tools and observing logs.
+*   **Next Action:** Implement CRUD screens for projects & employees, then the Allocation screen.

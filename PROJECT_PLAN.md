@@ -30,11 +30,11 @@ A **mobile‑only, fully offline timesheet manager** designed primarily as a **p
 
 | Epic              | User Story                                                                                                                                    | MoSCoW | Status       |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------ |
-| Authentication    | As a **manager**, I unlock the app via Face ID, or optional username/password; future Apple/Google sign‑in ready                              | Must   | In Progress  |
+| Authentication    | As a **manager**, I unlock the app via Face ID, or optional username/password; future Apple/Google sign‑in ready                              | Must   | Done         |
 | Hour Allocation   | As a **manager**, I assign project hours to employees                                                                                         | Must   | To Do        |
 | Overtime Settings | As a **manager**, I configure whether overtime is allowed                                                                                     | Should | To Do        |
 | Reporting         | As a **manager**, I export monthly hours as CSV/PDF/Excel                                                                                     | Must   | To Do        |
-| User Storage      | As a **manager**, I can set a username and optional password; app auto‑opens if no password set; settings let me toggle password or wipe data | Must   | To Do        |
+| User Storage      | As a **manager**, I can set a username and optional password; app auto‑opens if no password set; settings let me toggle password or wipe data | Must   | Done         |
 | Notifications     | As a **manager**, I receive a local reminder if I haven’t allocated hours by 17:00                                                            | Could  | To Do        |
 | Encryption Toggle | As a **manager**, I enable biometric encryption of local data                                                                                 | Could  | To Do        |
 | Cloud‑Ready Layer | As a **developer**, I can swap the local DB with a remote API without rewriting UI                                                            | Should | To Do        |
