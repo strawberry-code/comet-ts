@@ -2,6 +2,8 @@ import 'package:flutter_riverpod_clean_architecture/features/project/presentatio
 import 'package:flutter_riverpod_clean_architecture/features/project/presentation/screens/project_detail_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/presentation/screens/employee_list_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/presentation/screens/employee_detail_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/level/presentation/screens/level_list_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/level/presentation/screens/level_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_clean_architecture/core/constants/app_constants.dart';
@@ -86,6 +88,20 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/employees/:id',
         name: 'employee_detail',
         builder: (context, state) => EmployeeDetailScreen(employeeId: state.pathParameters['id'] == 'add' ? null : int.parse(state.pathParameters['id']!)),
+      ),
+
+      // Level List route
+      GoRoute(
+        path: '/levels',
+        name: 'levels',
+        builder: (context, state) => const LevelListScreen(),
+      ),
+
+      // Level Detail route (Add/Edit)
+      GoRoute(
+        path: '/levels/:id',
+        name: 'level_detail',
+        builder: (context, state) => LevelDetailScreen(levelId: state.pathParameters['id'] == 'add' ? null : int.parse(state.pathParameters['id']!)),
       ),
 
       // Login route

@@ -185,6 +185,16 @@ class HomeScreen extends ConsumerWidget {
                           GoRouter.of(context).go('/employees'); // Navigate to the employees list screen
                         },
                       ),
+                      // Add Levels feature tile
+                      _buildFeatureTile(
+                        context,
+                        icon: Icons.leaderboard, // Or a more suitable icon
+                        title: 'Levels',
+                        color: Colors.brown, // Choose a suitable color
+                        onTap: () {
+                          GoRouter.of(context).go('/levels'); // Navigate to the levels list screen
+                        },
+                      ),
                     ],
                   ),
                   

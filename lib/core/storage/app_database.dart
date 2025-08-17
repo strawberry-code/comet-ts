@@ -29,6 +29,7 @@ class Projects extends Table {
 class Levels extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().unique()();
+  IntColumn get costPerHour => integer()(); // New field for cost per hour in cents
 }
 
 class Employees extends Table {

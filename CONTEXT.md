@@ -8,6 +8,7 @@ This section will be updated prompt-by-prompt with the user's requirements.
 *   **2025-08-17:** The user wants to integrate the `User` concept with the existing login and registration flow, and remove the separate "User" button and "Users" list from the UI.
 *   **2025-08-17:** The user wants Project Budget to be defined in EURO (€) and allow decimal values with two decimal places (e.g., 123.23).
 *   **2025-08-17:** The user wants to ensure project names are unique, without using them as IDs.
+*   **2025-08-17:** The user wants to refactor the `Employees` table to use a `Levels` table for employee levels, where each level has a name and an hourly cost. The `Levels` table should be pre-populated with default values (STAGE, ASSOCIATE, etc.) but allow user modification.
 
 ## Implementation History
 
@@ -111,6 +112,17 @@ This section provides a brief history of implementation decisions.
         8.  Adjusted navigation in `EmployeeDetailScreen` to use `context.go('/employees')` for back, cancel, and after successful save/update.
 
 *   **2025-08-17:**
+    *   **What:** Implemented Level CRUD feature.
+    *   **Why:** To manage employee levels and their associated costs.
+    *   **How:**
+        1.  Modified `Levels` table in `app_database.dart` to add `costPerHour`.
+        2.  Created `LevelEntity`, `LevelModel`.
+        3.  Created `LevelLocalDataSource` and `LevelRepository`.
+        4.  Created Level Use Cases and Providers.
+        5.  Implemented `LevelListScreen` and `LevelDetailScreen` (Add/Edit).
+        6.  Integrated Level routes into `AppRouter` and added a tile to `HomeScreen`.
+
+*   **2025-08-17:**
     *   **What:** Completed Project Budget field implementation.
     *   **Why:** To define budget in EURO (€) with two decimal places.
     *   **How:**
@@ -122,8 +134,11 @@ This section provides a brief history of implementation decisions.
 This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
-*   **Last Action:** Completed Project Budget field implementation and fixed Employee navigation issues.
+*   **Last Action:** Implemented Level CRUD feature and completed Project Budget field implementation.
 *   **Next Action:**
-    1.  Test Project CRUD functionality with new budget field.
-    2.  Test Employee CRUD functionality.
-    3.  Implement Allocation screen with validation (from Sprint 1).
+    1.  Pre-populate `Levels` table with default values.
+    2.  Modify Employee creation/editing to use a Dropdown for Level selection.
+    3.  Test Project CRUD functionality with new budget field.
+    4.  Test Employee CRUD functionality.
+    5.  Test Level CRUD functionality.
+    6.  Implement Allocation screen with validation (from Sprint 1).

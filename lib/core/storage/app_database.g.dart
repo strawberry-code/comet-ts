@@ -739,8 +739,19 @@ class $LevelsTable extends Levels with TableInfo<$LevelsTable, Level> {
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _costPerHourMeta = const VerificationMeta(
+    'costPerHour',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<int> costPerHour = GeneratedColumn<int>(
+    'cost_per_hour',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, costPerHour];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -764,6 +775,17 @@ class $LevelsTable extends Levels with TableInfo<$LevelsTable, Level> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('cost_per_hour')) {
+      context.handle(
+        _costPerHourMeta,
+        costPerHour.isAcceptableOrUnknown(
+          data['cost_per_hour']!,
+          _costPerHourMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_costPerHourMeta);
+    }
     return context;
   }
 
@@ -781,6 +803,10 @@ class $LevelsTable extends Levels with TableInfo<$LevelsTable, Level> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      costPerHour: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cost_per_hour'],
+      )!,
     );
   }
 
@@ -793,17 +819,27 @@ class $LevelsTable extends Levels with TableInfo<$LevelsTable, Level> {
 class Level extends DataClass implements Insertable<Level> {
   final int id;
   final String name;
-  const Level({required this.id, required this.name});
+  final int costPerHour;
+  const Level({
+    required this.id,
+    required this.name,
+    required this.costPerHour,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
+    map['cost_per_hour'] = Variable<int>(costPerHour);
     return map;
   }
 
   LevelsCompanion toCompanion(bool nullToAbsent) {
-    return LevelsCompanion(id: Value(id), name: Value(name));
+    return LevelsCompanion(
+      id: Value(id),
+      name: Value(name),
+      costPerHour: Value(costPerHour),
+    );
   }
 
   factory Level.fromJson(
@@ -814,6 +850,7 @@ class Level extends DataClass implements Insertable<Level> {
     return Level(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      costPerHour: serializer.fromJson<int>(json['costPerHour']),
     );
   }
   @override
@@ -822,15 +859,22 @@ class Level extends DataClass implements Insertable<Level> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'costPerHour': serializer.toJson<int>(costPerHour),
     };
   }
 
-  Level copyWith({int? id, String? name}) =>
-      Level(id: id ?? this.id, name: name ?? this.name);
+  Level copyWith({int? id, String? name, int? costPerHour}) => Level(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    costPerHour: costPerHour ?? this.costPerHour,
+  );
   Level copyWithCompanion(LevelsCompanion data) {
     return Level(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      costPerHour: data.costPerHour.present
+          ? data.costPerHour.value
+          : this.costPerHour,
     );
   }
 
@@ -838,40 +882,60 @@ class Level extends DataClass implements Insertable<Level> {
   String toString() {
     return (StringBuffer('Level(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('costPerHour: $costPerHour')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, costPerHour);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Level && other.id == this.id && other.name == this.name);
+      (other is Level &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.costPerHour == this.costPerHour);
 }
 
 class LevelsCompanion extends UpdateCompanion<Level> {
   final Value<int> id;
   final Value<String> name;
+  final Value<int> costPerHour;
   const LevelsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.costPerHour = const Value.absent(),
   });
-  LevelsCompanion.insert({this.id = const Value.absent(), required String name})
-    : name = Value(name);
+  LevelsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required int costPerHour,
+  }) : name = Value(name),
+       costPerHour = Value(costPerHour);
   static Insertable<Level> custom({
     Expression<int>? id,
     Expression<String>? name,
+    Expression<int>? costPerHour,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (costPerHour != null) 'cost_per_hour': costPerHour,
     });
   }
 
-  LevelsCompanion copyWith({Value<int>? id, Value<String>? name}) {
-    return LevelsCompanion(id: id ?? this.id, name: name ?? this.name);
+  LevelsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<int>? costPerHour,
+  }) {
+    return LevelsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      costPerHour: costPerHour ?? this.costPerHour,
+    );
   }
 
   @override
@@ -883,6 +947,9 @@ class LevelsCompanion extends UpdateCompanion<Level> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (costPerHour.present) {
+      map['cost_per_hour'] = Variable<int>(costPerHour.value);
+    }
     return map;
   }
 
@@ -890,7 +957,8 @@ class LevelsCompanion extends UpdateCompanion<Level> {
   String toString() {
     return (StringBuffer('LevelsCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('costPerHour: $costPerHour')
           ..write(')'))
         .toString();
   }
@@ -2006,9 +2074,17 @@ typedef $$ProjectsTableProcessedTableManager =
       PrefetchHooks Function({bool allocationsRefs})
     >;
 typedef $$LevelsTableCreateCompanionBuilder =
-    LevelsCompanion Function({Value<int> id, required String name});
+    LevelsCompanion Function({
+      Value<int> id,
+      required String name,
+      required int costPerHour,
+    });
 typedef $$LevelsTableUpdateCompanionBuilder =
-    LevelsCompanion Function({Value<int> id, Value<String> name});
+    LevelsCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<int> costPerHour,
+    });
 
 final class $$LevelsTableReferences
     extends BaseReferences<_$AppDatabase, $LevelsTable, Level> {
@@ -2049,6 +2125,11 @@ class $$LevelsTableFilterComposer
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get costPerHour => $composableBuilder(
+    column: $table.costPerHour,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2096,6 +2177,11 @@ class $$LevelsTableOrderingComposer
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get costPerHour => $composableBuilder(
+    column: $table.costPerHour,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$LevelsTableAnnotationComposer
@@ -2112,6 +2198,11 @@ class $$LevelsTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get costPerHour => $composableBuilder(
+    column: $table.costPerHour,
+    builder: (column) => column,
+  );
 
   Expression<T> employeesRefs<T extends Object>(
     Expression<T> Function($$EmployeesTableAnnotationComposer a) f,
@@ -2169,10 +2260,19 @@ class $$LevelsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
-              }) => LevelsCompanion(id: id, name: name),
+                Value<int> costPerHour = const Value.absent(),
+              }) =>
+                  LevelsCompanion(id: id, name: name, costPerHour: costPerHour),
           createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String name}) =>
-                  LevelsCompanion.insert(id: id, name: name),
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                required int costPerHour,
+              }) => LevelsCompanion.insert(
+                id: id,
+                name: name,
+                costPerHour: costPerHour,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) =>
