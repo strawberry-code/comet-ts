@@ -25,37 +25,46 @@ class ProjectListScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: projectsAsync.when(
-        data: (projects) {
-          if (projects.isEmpty) {
-            return const Center(
-              child: Text('No projects yet. Add one!'),
-            );
-          }
-          return ListView.builder(
-            itemCount: projects.length,
-            itemBuilder: (context, index) {
-              final project = projects[index];
-              return ListTile(
-                title: Text(project.name),
-                subtitle: Text('Budget: ${project.budgetHours} hours'),
-                trailing: IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    // Navigate to edit project screen
-                    context.go('/projects/${project.id}');
-                  },
-                ),
-                onLongPress: () {
-                  // Show delete confirmation dialog
-                  ProjectListScreen._confirmDelete(context, ref, project);
-                },
-              );
-            },
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(projectsListProvider);
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Error: $error')),
+        child: projectsAsync.when(
+          data: (projects) {
+            if (projects.isEmpty) {
+              return ListView(
+                children: const [
+                  Center(
+                    child: Text('No projects yet. Add one!'),
+                  ),
+                ],
+              );
+            }
+            return ListView.builder(
+              itemCount: projects.length,
+              itemBuilder: (context, index) {
+                final project = projects[index];
+                return ListTile(
+                  title: Text(project.name),
+                  subtitle: Text('Budget: ${project.budgetHours} hours'),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      // Navigate to edit project screen
+                      context.go('/projects/${project.id}');
+                    },
+                  ),
+                  onLongPress: () {
+                    // Show delete confirmation dialog
+                    ProjectListScreen._confirmDelete(context, ref, project);
+                  },
+                );
+              },
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(child: Text('Error: $error')),
+        ),
       ),
     );
   }
