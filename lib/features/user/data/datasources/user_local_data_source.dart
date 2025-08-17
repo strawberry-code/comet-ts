@@ -1,67 +1,75 @@
-
+import 'package:flutter_riverpod_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_riverpod_clean_architecture/core/storage/app_database.dart';
 import 'package:flutter_riverpod_clean_architecture/features/user/data/models/user_model.dart';
 
 abstract class UserLocalDataSource {
   Future<UserModel> createUser(UserModel user);
   Future<UserModel?> getUser(int id);
+  Future<UserModel?> getUserByUsername(String username);
   Future<void> updateUser(UserModel user);
   Future<void> deleteUser(int id);
-  Future<UserModel?> getUserByUsername(String username);
   Future<void> deleteAllUsers();
 }
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
-  final AppDatabase database;
+  final AppDatabase appDatabase;
 
-  UserLocalDataSourceImpl({required this.database});
+  UserLocalDataSourceImpl({required this.appDatabase});
 
   @override
   Future<UserModel> createUser(UserModel user) async {
-    print('Attempting to create user: ${user.username} with passwordHash: ${user.passwordHash}');
     try {
-      final id = await database.into(database.users).insert(user.toDrift());
-      print('User created with ID: $id');
-      return user.copyWith(id: id);
+      final id = await appDatabase.into(appDatabase.users).insert(user.toDrift());
+      return user.copyWith(id: id) as UserModel;
     } catch (e) {
-      print('Error creating user: $e');
-      rethrow; // Re-throw the exception to be caught by the repository
+      throw CacheException();
     }
   }
 
   @override
   Future<UserModel?> getUser(int id) async {
-    final user = await (database.select(database.users)..where((u) => u.id.equals(id))).getSingleOrNull();
-    if (user != null) {
-      return UserModel.fromDrift(user);
+    try {
+      final user = await (appDatabase.select(appDatabase.users)..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
+      return user != null ? UserModel.fromDrift(user) : null;
+    } catch (e) {
+      throw CacheException();
     }
-    return null;
-  }
-
-  @override
-  Future<void> updateUser(UserModel user) async {
-    await (database.update(database.users)..where((u) => u.id.equals(user.id))).write(user.toDrift());
-  }
-
-  @override
-  Future<void> deleteUser(int id) async {
-    await (database.delete(database.users)..where((u) => u.id.equals(id))).go();
   }
 
   @override
   Future<UserModel?> getUserByUsername(String username) async {
-    print('Attempting to get user by username: $username');
-    final user = await (database.select(database.users)..where((u) => u.username.equals(username))).getSingleOrNull();
-    if (user != null) {
-      print('User retrieved: ${user.username} with passwordHash: ${user.passwordHash}');
-      return UserModel.fromDrift(user);
+    try {
+      final user = await (appDatabase.select(appDatabase.users)..where((tbl) => tbl.username.equals(username))).getSingleOrNull();
+      return user != null ? UserModel.fromDrift(user) : null;
+    } catch (e) {
+      throw CacheException();
     }
-    print('User with username $username not found.');
-    return null;
+  }
+
+  @override
+  Future<void> updateUser(UserModel user) async {
+    try {
+      await appDatabase.update(appDatabase.users).replace(user.toDrift());
+    } catch (e) {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<void> deleteUser(int id) async {
+    try {
+      await (appDatabase.delete(appDatabase.users)..where((tbl) => tbl.id.equals(id))).go();
+    } catch (e) {
+      throw CacheException();
+    }
   }
 
   @override
   Future<void> deleteAllUsers() async {
-    await database.delete(database.users).go();
+    try {
+      await appDatabase.delete(appDatabase.users).go();
+    } catch (e) {
+      throw CacheException();
+    }
   }
 }

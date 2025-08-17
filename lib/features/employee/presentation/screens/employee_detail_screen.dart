@@ -7,6 +7,8 @@ import 'package:flutter_riverpod_clean_architecture/core/usecases/usecase.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/domain/usecases/get_employee.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/domain/usecases/create_employee.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/domain/usecases/update_employee.dart';
+import 'package:flutter_riverpod_clean_architecture/features/level/domain/entities/level_entity.dart'; // New import
+import 'package:flutter_riverpod_clean_architecture/features/level/presentation/providers/level_providers.dart'; // New import
 
 class EmployeeDetailScreen extends ConsumerStatefulWidget {
   final int? employeeId;
@@ -20,46 +22,63 @@ class EmployeeDetailScreen extends ConsumerStatefulWidget {
 class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  late TextEditingController _levelIdController;
+  LevelEntity? _selectedLevel; // Changed from TextEditingController
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController();
-    _levelIdController = TextEditingController();
 
-    if (widget.employeeId != null) {
-      // Load employee data for editing
-      ref.read(getEmployeeUseCaseProvider).call(GetEmployeeParams(id: widget.employeeId!)).then((result) {
-        result.fold(
-          (failure) {
-            // Handle error
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error loading employee: ${failure.message}')),
-            );
-          },
-          (employee) {
-            if (employee != null) {
-              _nameController.text = employee.name;
-              _levelIdController.text = employee.levelId.toString();
-            }
-          },
-        );
-      });
-    }
+    // Fetch all levels first
+    ref.read(getAllLevelsUseCaseProvider).call(NoParams()).then((levelsResult) {
+      levelsResult.fold(
+        (failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error loading levels: ${failure.message}')),
+          );
+        },
+        (levels) {
+          if (widget.employeeId != null) {
+            // Load employee data for editing
+            ref.read(getEmployeeUseCaseProvider).call(GetEmployeeParams(id: widget.employeeId!)).then((employeeResult) {
+              employeeResult.fold(
+                (failure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error loading employee: ${failure.message}')),
+                  );
+                },
+                (employee) {
+                  if (employee != null) {
+                    _nameController.text = employee.name;
+                    _selectedLevel = levels.firstWhere((level) => level.id == employee.levelId);
+                    setState(() {}); // Update UI after setting selected level
+                  }
+                },
+              );
+            });
+          }
+        },
+      );
+    });
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    _levelIdController.dispose();
     super.dispose();
   }
 
   void _saveEmployee() async {
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text;
-      final levelId = int.parse(_levelIdController.text);
+      final levelId = _selectedLevel?.id; // Get levelId from selectedLevel
+
+      if (levelId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select an employee level.')),
+        );
+        return;
+      }
 
       if (widget.employeeId == null) {
         // Create new employee
@@ -79,7 +98,7 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Employee created successfully!')),
             );
-            context.go('/employees'); // Changed from context.pop()
+            context.go('/employees');
           },
         );
       } else {
@@ -100,7 +119,7 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Employee updated successfully!')),
             );
-            context.go('/employees'); // Changed from context.pop()
+            context.go('/employees');
           },
         );
       }
@@ -110,14 +129,16 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final levelsAsync = ref.watch(levelsListProvider); // Watch levels provider
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.employeeId == null ? 'Add Employee' : 'Edit Employee'),
-        automaticallyImplyLeading: false, // Explicitly set to false
-        leading: IconButton( // Explicitly add a back button
+        automaticallyImplyLeading: false,
+        leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.go('/employees'); // Changed from context.pop()
+            context.go('/employees');
           },
         ),
       ),
@@ -137,19 +158,37 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
                   return null;
                 },
               ),
-              TextFormField(
-                controller: _levelIdController,
-                decoration: const InputDecoration(labelText: 'Level ID'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a level ID';
+              levelsAsync.when(
+                data: (levels) {
+                  if (levels.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text('No levels available. Please add levels first.'),
+                    );
                   }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
+                  return DropdownButtonFormField<LevelEntity>(
+                    value: _selectedLevel,
+                    decoration: const InputDecoration(labelText: 'Level'),
+                    items: levels.map((level) {
+                      return DropdownMenuItem(value: level,
+                        child: Text(level.name),
+                      );
+                    }).toList(),
+                    onChanged: (LevelEntity? newValue) {
+                      setState(() {
+                        _selectedLevel = newValue;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a level';
+                      }
+                      return null;
+                    },
+                  );
                 },
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => Text('Error loading levels: $error'),
               ),
               const SizedBox(height: 20),
               Row(
@@ -161,7 +200,7 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.go('/employees'); // Changed from context.pop()
+                      context.go('/employees');
                     },
                     child: const Text('Cancel'),
                   ),

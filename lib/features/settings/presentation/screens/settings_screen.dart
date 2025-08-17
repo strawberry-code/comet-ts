@@ -11,9 +11,27 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.tr('settings'))),
+      appBar: AppBar(
+        title: Text(context.tr('settings')),
+        leading: IconButton( // Explicitly add a back button
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.go('/'); // Navigate back to the home screen
+          },
+        ),
+      ),
       body: ListView(
         children: [
+          // Edit User settings
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: Text(context.tr('edit_profile')), // Assuming 'edit_profile' localization key
+            subtitle: Text(context.tr('edit_profile_description')), // Assuming 'edit_profile_description' localization key
+            onTap: () => context.go('/user_detail'),
+          ),
+
+          const Divider(),
+
           // Language settings
           ListTile(
             leading: const Icon(Icons.language),
@@ -44,16 +62,6 @@ class SettingsScreen extends ConsumerWidget {
             onTap: () {
               // Notification settings (to be implemented)
             },
-          ),
-
-          const Divider(),
-
-          // Localization demos
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: Text(context.tr('localization_demo')),
-            subtitle: Text(context.tr('localization_demo_description')),
-            onTap: () => context.go(AppConstants.localizationAssetsDemoRoute),
           ),
         ],
       ),

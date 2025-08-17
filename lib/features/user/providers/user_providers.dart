@@ -11,7 +11,7 @@ import 'package:flutter_riverpod_clean_architecture/features/user/domain/usecase
 
 final userLocalDataSourceProvider = Provider<UserLocalDataSource>((ref) {
   final database = ref.watch(appDatabaseProvider);
-  return UserLocalDataSourceImpl(database: database);
+  return UserLocalDataSourceImpl(appDatabase: database);
 });
 
 final userRepositoryProvider = Provider<UserRepository>((ref) {

@@ -52,6 +52,23 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (Migrator migrator) async {
+          await migrator.createAll();
+          // Pre-populate Levels table
+          await into(levels).insert(LevelsCompanion.insert(name: 'STAGE', costPerHour: 1000)); // 10.00€
+          await into(levels).insert(LevelsCompanion.insert(name: 'ASSOCIATE', costPerHour: 2000)); // 20.00€
+          await into(levels).insert(LevelsCompanion.insert(name: 'SENIOR ASSOCIATE', costPerHour: 3000)); // 30.00€
+          await into(levels).insert(LevelsCompanion.insert(name: 'MANAGER', costPerHour: 4000)); // 40.00€
+          await into(levels).insert(LevelsCompanion.insert(name: 'SENIOR MANAGER', costPerHour: 5000)); // 50.00€
+          await into(levels).insert(LevelsCompanion.insert(name: 'DIRECTOR', costPerHour: 6000)); // 60.00€
+        },
+        onUpgrade: (Migrator migrator, int from, int to) async {
+          // Handle schema upgrades here if schemaVersion changes in the future
+        },
+      );
 }
 
 LazyDatabase _openConnection() {

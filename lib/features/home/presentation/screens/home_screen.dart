@@ -71,53 +71,6 @@ class HomeScreen extends ConsumerWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  // User profile card
-                  Card(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            child: Text(
-                              user.username.isNotEmpty
-                                  ? user.username.substring(0, 1).toUpperCase()
-                                  : 'U',
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  user.username,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              // Add edit profile logic
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  
                   // Features section
                   const Text(
                     'Features',
@@ -127,7 +80,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Feature tiles
                   GridView.count(
                     shrinkWrap: true,
@@ -137,34 +90,6 @@ class HomeScreen extends ConsumerWidget {
                     crossAxisSpacing: 16,
                     childAspectRatio: 1.2,
                     children: [
-                      _buildFeatureTile(
-                        context,
-                        icon: Icons.post_add,
-                        title: 'Posts',
-                        color: Colors.blue,
-                        onTap: () {},
-                      ),
-                      _buildFeatureTile(
-                        context,
-                        icon: Icons.photo_library,
-                        title: 'Photos',
-                        color: Colors.green,
-                        onTap: () {},
-                      ),
-                      _buildFeatureTile(
-                        context,
-                        icon: Icons.people,
-                        title: 'Users',
-                        color: Colors.orange,
-                        onTap: () {},
-                      ),
-                      _buildFeatureTile(
-                        context,
-                        icon: Icons.comment,
-                        title: 'Comments',
-                        color: Colors.purple,
-                        onTap: () {},
-                      ),
                       // Add Project feature tile
                       _buildFeatureTile(
                         context,
@@ -197,9 +122,9 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Information section
                   const Text(
                     'About this app',

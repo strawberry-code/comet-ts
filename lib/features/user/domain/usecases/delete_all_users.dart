@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod_clean_architecture/core/error/failures.dart';
 import 'package:flutter_riverpod_clean_architecture/core/usecases/usecase.dart';

@@ -4,12 +4,12 @@ import 'package:flutter_riverpod_clean_architecture/features/employee/presentati
 import 'package:flutter_riverpod_clean_architecture/features/employee/presentation/screens/employee_detail_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/level/presentation/screens/level_list_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/level/presentation/screens/level_detail_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/user/presentation/screens/user_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_clean_architecture/core/constants/app_constants.dart';
 import 'package:flutter_riverpod_clean_architecture/core/providers/localization_providers.dart';
 import 'package:flutter_riverpod_clean_architecture/core/router/locale_aware_router.dart';
-import 'package:flutter_riverpod_clean_architecture/examples/localization_assets_demo.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/presentation/screens/register_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/home/presentation/screens/home_screen.dart';
@@ -132,11 +132,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LanguageSettingsScreen(),
       ),
 
-      // Localization Assets Demo route
+      // User Detail route (Edit User)
       GoRoute(
-        path: AppConstants.localizationAssetsDemoRoute,
-        name: 'localization_assets_demo',
-        builder: (context, state) => const LocalizationAssetsDemo(),
+        path: '/user_detail',
+        name: 'user_detail',
+        builder: (context, state) => const UserDetailScreen(),
       ),
 
       // Initial route - redirects based on auth state

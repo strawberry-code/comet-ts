@@ -9,6 +9,10 @@ This section will be updated prompt-by-prompt with the user's requirements.
 *   **2025-08-17:** The user wants Project Budget to be defined in EURO (€) and allow decimal values with two decimal places (e.g., 123.23).
 *   **2025-08-17:** The user wants to ensure project names are unique, without using them as IDs.
 *   **2025-08-17:** The user wants to refactor the `Employees` table to use a `Levels` table for employee levels, where each level has a name and an hourly cost. The `Levels` table should be pre-populated with default values (STAGE, ASSOCIATE, etc.) but allow user modification.
+*   **2025-08-17:** The user wants to remove the username display and circle avatar from `HomeScreen`.
+*   **2025-08-17:** The user wants to move "Edit User" functionality to `SettingsScreen` and implement it, including changing username, toggling biometrics, and deleting user data.
+*   **2025-08-17:** The user wants the "Save Changes" and "Delete User and All Data" buttons in `UserDetailScreen` to be horizontally centered.
+*   **2025-08-17:** The user wants the back arrow in `UserDetailScreen` to always navigate back to `SettingsScreen`.
 
 ## Implementation History
 
@@ -121,6 +125,7 @@ This section provides a brief history of implementation decisions.
         4.  Created Level Use Cases and Providers.
         5.  Implemented `LevelListScreen` and `LevelDetailScreen` (Add/Edit).
         6.  Integrated Level routes into `AppRouter` and added a tile to `HomeScreen`.
+        7.  Fixed `LevelRepository` import issues.
 
 *   **2025-08-17:**
     *   **What:** Completed Project Budget field implementation.
@@ -129,12 +134,28 @@ This section provides a brief history of implementation decisions.
         1.  Modified `ProjectDetailScreen` to handle decimal budget input and conversion to/from cents.
         2.  Updated `ProjectListScreen` to display budget in Euros with two decimal places.
 
+*   **2025-08-17:**
+    *   **What:** Implemented "Edit User" functionality and UI/UX improvements.
+    *   **Why:** To allow users to manage their profile and improve overall app usability.
+    *   **How:**
+        1.  Removed username display and circle avatar from `HomeScreen`.
+        2.  Created `UserDetailScreen` for editing user details (username, biometrics, delete user).
+        3.  Integrated `UserDetailScreen` route into `AppRouter`.
+        4.  Added "Edit User" `ListTile` to `SettingsScreen` navigating to `UserDetailScreen`.
+        5.  Implemented `updateUser` method in `AuthNotifier`.
+        6.  Implemented `update_user` and `delete_all_users` use cases.
+        7.  Implemented `user_repository`, `user_repository_impl`, `user_local_data_source`, and `user_model`.
+        8.  Implemented `user_providers`.
+        9.  Centered "Save Changes" and "Delete User and All Data" buttons in `UserDetailScreen`.
+        10. Ensured back arrow in `UserDetailScreen` navigates to `SettingsScreen`.
+        11. Removed "Localization demos" `ListTile` from `SettingsScreen`.
+
 ## Project State
 
 This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
-*   **Last Action:** Implemented Level CRUD feature and completed Project Budget field implementation.
+*   **Last Action:** Implemented "Edit User" functionality and UI/UX improvements.
 *   **Next Action:**
     1.  Pre-populate `Levels` table with default values.
     2.  Modify Employee creation/editing to use a Dropdown for Level selection.

@@ -127,6 +127,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       ),
     );
   }
+
+  // Update User
+  void updateUser(UserEntity updatedUser) {
+    state = state.copyWith(user: updatedUser);
+  }
 }
 
 // Auth provider
