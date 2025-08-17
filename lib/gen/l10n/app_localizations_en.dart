@@ -51,6 +51,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notification_settings => 'Configure notification preferences';
 
   @override
+  String get edit_profile => 'Edit Profile';
+
+  @override
+  String get edit_profile_description => 'Manage your profile information';
+
+  @override
   String get localization_demo => 'Localization Demo';
 
   @override

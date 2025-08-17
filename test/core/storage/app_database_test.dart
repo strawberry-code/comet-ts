@@ -31,27 +31,32 @@ void main() {
     test('can insert and read a project', () async {
       final project = ProjectsCompanion.insert(
         name: 'Test Project',
-        budgetHours: 100,
+        budget: 10000, // €100.00 in cents
+        startDate: DateTime.now().millisecondsSinceEpoch,
+        endDate: DateTime.now().add(const Duration(days: 30)).millisecondsSinceEpoch,
       );
       final id = await database.into(database.projects).insert(project);
       final retrievedProject = await (database.select(database.projects)..where((p) => p.id.equals(id))).getSingle();
       expect(retrievedProject.name, 'Test Project');
-      expect(retrievedProject.budgetHours, 100);
+      expect(retrievedProject.budget, 10000);
     });
 
     test('can insert and read a level', () async {
       final level = LevelsCompanion.insert(
         name: 'Senior',
+        costPerHour: 4000, // €40.00 per hour in cents
       );
       final id = await database.into(database.levels).insert(level);
       final retrievedLevel = await (database.select(database.levels)..where((l) => l.id.equals(id))).getSingle();
       expect(retrievedLevel.name, 'Senior');
+      expect(retrievedLevel.costPerHour, 4000);
     });
 
     test('can insert and read an employee with a level', () async {
       // First, insert a level
       final level = LevelsCompanion.insert(
         name: 'Junior',
+        costPerHour: 2000, // €20.00 per hour in cents
       );
       final levelId = await database.into(database.levels).insert(level);
 
@@ -69,10 +74,18 @@ void main() {
 
     test('can insert and read an allocation', () async {
       // First, insert a project and an employee
-      final project = ProjectsCompanion.insert(name: 'Allocation Project', budgetHours: 50);
+      final project = ProjectsCompanion.insert(
+        name: 'Allocation Project', 
+        budget: 5000, // €50.00 in cents
+        startDate: DateTime.now().millisecondsSinceEpoch,
+        endDate: DateTime.now().add(const Duration(days: 30)).millisecondsSinceEpoch,
+      );
       final projectId = await database.into(database.projects).insert(project);
 
-      final level = LevelsCompanion.insert(name: 'Mid');
+      final level = LevelsCompanion.insert(
+        name: 'Mid',
+        costPerHour: 3000, // €30.00 per hour in cents
+      );
       final levelId = await database.into(database.levels).insert(level);
 
       final employee = EmployeesCompanion.insert(name: 'Jane Smith', levelId: levelId);

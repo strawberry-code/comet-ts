@@ -4,6 +4,14 @@ import 'package:flutter_riverpod_clean_architecture/features/employee/presentati
 import 'package:flutter_riverpod_clean_architecture/features/employee/presentation/screens/employee_detail_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/level/presentation/screens/level_list_screen.dart';
 import 'package:flutter_riverpod_clean_architecture/features/level/presentation/screens/level_detail_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/allocation_list_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/allocation_detail_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/employee_allocation_list_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/project_allocation_list_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/employee_selector_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/project_selector_screen.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/employee_calendar_view.dart';
+import 'package:flutter_riverpod_clean_architecture/features/allocation/presentation/screens/project_calendar_view.dart';
 import 'package:flutter_riverpod_clean_architecture/features/user/presentation/screens/user_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,6 +110,80 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/levels/:id',
         name: 'level_detail',
         builder: (context, state) => LevelDetailScreen(levelId: state.pathParameters['id'] == 'add' ? null : int.parse(state.pathParameters['id']!)),
+      ),
+
+      // Allocation List route
+      GoRoute(
+        path: '/allocations',
+        name: 'allocations',
+        builder: (context, state) => const AllocationListScreen(),
+      ),
+
+      // Allocation Detail route (Add/Edit)
+      GoRoute(
+        path: '/allocations/:id',
+        name: 'allocation_detail',
+        builder: (context, state) {
+          // Handle query parameters for pre-filling employee or project
+          final employeeId = state.uri.queryParameters['employeeId'];
+          final projectId = state.uri.queryParameters['projectId'];
+          
+          return AllocationDetailScreen(
+            allocationId: state.pathParameters['id'] == 'add' ? null : int.parse(state.pathParameters['id']!),
+            preselectedEmployeeId: employeeId != null ? int.parse(employeeId) : null,
+            preselectedProjectId: projectId != null ? int.parse(projectId) : null,
+          );
+        },
+      ),
+
+      // Employee Allocation List route
+      GoRoute(
+        path: '/allocations/employee/:employeeId',
+        name: 'employee_allocations',
+        builder: (context, state) => EmployeeAllocationListScreen(
+          employeeId: int.parse(state.pathParameters['employeeId']!),
+        ),
+      ),
+
+      // Project Allocation List route
+      GoRoute(
+        path: '/allocations/project/:projectId',
+        name: 'project_allocations',
+        builder: (context, state) => ProjectAllocationListScreen(
+          projectId: int.parse(state.pathParameters['projectId']!),
+        ),
+      ),
+
+      // Employee Selector for Calendar View
+      GoRoute(
+        path: '/calendar/employees',
+        name: 'employee_selector',
+        builder: (context, state) => const EmployeeSelectorScreen(),
+      ),
+
+      // Project Selector for Calendar View
+      GoRoute(
+        path: '/calendar/projects',
+        name: 'project_selector',
+        builder: (context, state) => const ProjectSelectorScreen(),
+      ),
+
+      // Employee Calendar View
+      GoRoute(
+        path: '/calendar/employee/:employeeId',
+        name: 'employee_calendar',
+        builder: (context, state) => EmployeeCalendarView(
+          employeeId: int.parse(state.pathParameters['employeeId']!),
+        ),
+      ),
+
+      // Project Calendar View
+      GoRoute(
+        path: '/calendar/project/:projectId',
+        name: 'project_calendar',
+        builder: (context, state) => ProjectCalendarView(
+          projectId: int.parse(state.pathParameters['projectId']!),
+        ),
       ),
 
       // Login route

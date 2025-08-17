@@ -125,6 +125,8 @@ final Map<String, Map<String, String>> localizedValues = {
     "change_theme": "Change Theme",
     "notifications": "Notifications",
     "notification_settings": "Notification Settings",
+    "edit_profile": "Edit Profile",
+    "edit_profile_description": "Manage your profile information",
     "localization_demo": "Localization Demo",
     "localization_demo_description":
         "Demonstrates language and formatting localization features",
@@ -156,6 +158,8 @@ final Map<String, Map<String, String>> localizedValues = {
     "change_theme": "Cambiar tema",
     "notifications": "Notificaciones",
     "notification_settings": "Configuración de notificaciones",
+    "edit_profile": "Editar Perfil",
+    "edit_profile_description": "Gestionar información de tu perfil",
     "localization_demo": "Demostración de localización",
     "localization_demo_description":
         "Demuestra las funciones de localización de idioma y formato",
@@ -214,6 +218,8 @@ final Map<String, Map<String, String>> localizedValues = {
     "change_theme": "Changer de thème",
     "notifications": "Notifications",
     "notification_settings": "Paramètres de notification",
+    "edit_profile": "Modifier le Profil",
+    "edit_profile_description": "Gérer vos informations de profil",
     "localization_demo": "Démo de localisation",
     "localization_demo_description":
         "Démontre les fonctionnalités de localisation de la langue et du formatage",
@@ -293,6 +299,13 @@ final Map<String, Map<String, String>> localizedValues = {
     "loading": "読み込み中...",
     "cache_expired": "キャッシュの有効期限が切れました",
     "cache_updated": "キャッシュが正常に更新されました",
+    "change_language": "言語を変更",
+    "theme": "テーマ",
+    "change_theme": "テーマを変更",
+    "notifications": "通知",
+    "notification_settings": "通知設定",
+    "edit_profile": "プロフィール編集",
+    "edit_profile_description": "プロフィール情報を管理",
   },
   "de": {
     "app_title": "Flutter Riverpod Saubere Architektur",
@@ -326,6 +339,8 @@ final Map<String, Map<String, String>> localizedValues = {
     "change_theme": "Thema ändern",
     "notifications": "Benachrichtigungen",
     "notification_settings": "Benachrichtigungseinstellungen",
+    "edit_profile": "Profil Bearbeiten",
+    "edit_profile_description": "Profil-Informationen verwalten",
     "localization_demo": "Lokalisierungsdemo",
     "localization_demo_description":
         "Zeigt Sprach- und Formatierungsfunktionen",
@@ -383,6 +398,8 @@ final Map<String, Map<String, String>> localizedValues = {
     "change_theme": "থিম পরিবর্তন করুন",
     "notifications": "বিজ্ঞপ্তি",
     "notification_settings": "বিজ্ঞপ্তির সেটিংস",
+    "edit_profile": "প্রোফাইল সম্পাদনা",
+    "edit_profile_description": "আপনার প্রোফাইল তথ্য পরিচালনা করুন",
     "localization_demo": "স্থানীয়করণ ডেমো",
     "localization_demo_description":
         "ভাষা ও ফরম্যাটিং লোকালাইজেশনের বৈশিষ্ট্য প্রদর্শন করে",
@@ -440,6 +457,8 @@ final Map<String, Map<String, String>> localizedValues = {
     "change_theme": "Cambia tema",
     "notifications": "Notifiche",
     "notification_settings": "Impostazioni notifiche",
+    "edit_profile": "Modifica Profilo",
+    "edit_profile_description": "Gestisci le informazioni del tuo profilo",
     "localization_demo": "Demo localizzazione",
     "localization_demo_description":
         "Dimostra le funzionalità di localizzazione di lingua e formattazione",

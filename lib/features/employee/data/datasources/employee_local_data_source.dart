@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:flutter_riverpod_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_riverpod_clean_architecture/core/storage/app_database.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/data/models/employee_model.dart';
@@ -8,6 +9,7 @@ abstract class EmployeeLocalDataSource {
   Future<List<EmployeeModel>> getAllEmployees();
   Future<void> updateEmployee(EmployeeModel employee);
   Future<void> deleteEmployee(int id);
+  Future<Map<String, dynamic>> getEmployeeWithLevel(int id);
 }
 
 class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
@@ -78,6 +80,31 @@ class EmployeeLocalDataSourceImpl implements EmployeeLocalDataSource {
       print('EmployeeLocalDataSourceImpl: Employee with ID $id deleted');
     } catch (e) {
       print('EmployeeLocalDataSourceImpl: Error deleting employee: $e');
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getEmployeeWithLevel(int id) async {
+    try {
+      print('EmployeeLocalDataSourceImpl: Getting employee with level for ID: $id');
+      final query = appDatabase.select(appDatabase.employees).join([
+        innerJoin(appDatabase.levels, appDatabase.levels.id.equalsExp(appDatabase.employees.levelId)),
+      ])..where(appDatabase.employees.id.equals(id));
+
+      final result = await query.getSingle();
+      final employee = result.readTable(appDatabase.employees);
+      final level = result.readTable(appDatabase.levels);
+
+      return {
+        'id': employee.id,
+        'name': employee.name,
+        'levelId': employee.levelId,
+        'levelName': level.name,
+        'costPerHour': level.costPerHour,
+      };
+    } catch (e) {
+      print('EmployeeLocalDataSourceImpl: Error getting employee with level: $e');
       throw CacheException();
     }
   }

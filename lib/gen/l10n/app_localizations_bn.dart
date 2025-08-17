@@ -51,6 +51,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notification_settings => 'বিজ্ঞপ্তির সেটিংস';
 
   @override
+  String get edit_profile => 'প্রোফাইল সম্পাদনা করুন';
+
+  @override
+  String get edit_profile_description => 'আপনার প্রোফাইল তথ্য পরিচালনা করুন';
+
+  @override
   String get localization_demo => 'স্থানীয়করণ ডেমো';
 
   @override

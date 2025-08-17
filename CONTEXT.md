@@ -13,6 +13,7 @@ This section will be updated prompt-by-prompt with the user's requirements.
 *   **2025-08-17:** The user wants to move "Edit User" functionality to `SettingsScreen` and implement it, including changing username, toggling biometrics, and deleting user data.
 *   **2025-08-17:** The user wants the "Save Changes" and "Delete User and All Data" buttons in `UserDetailScreen` to be horizontally centered.
 *   **2025-08-17:** The user wants the back arrow in `UserDetailScreen` to always navigate back to `SettingsScreen`.
+*   **2025-08-17:** The user wants allocation views restructured into two distinct calendar-based approaches: Employee Calendar View (select employee → view their allocation calendar) and Project Calendar View (select project → view team allocation calendar for that project).
 
 ## Implementation History
 
@@ -167,16 +168,41 @@ This section provides a brief history of implementation decisions.
     *   **Why:** To ensure the back arrow consistently navigates to the Login page.
     *   **How:** Changed `context.pop()` to `context.go(AppConstants.loginRoute)` for the back arrow's `onPressed` action in `register_screen.dart`.
 
+*   **2025-08-17:**
+    *   **What:** Implemented comprehensive Allocation Management system with calendar-based views.
+    *   **Why:** To provide efficient time allocation management with two distinct perspectives: employee-focused and project-focused calendar views.
+    *   **How:**
+        1.  **Fixed Employee Model Auto-increment Issue:** Corrected `EmployeeModel.toDrift()` to use `Value.absent()` for ID when creating new employees, resolving UNIQUE constraint failures.
+        2.  **Enhanced Employee List Display:** Updated Employee List to show level names (e.g., "ASSOCIATE") instead of level IDs for better UX.
+        3.  **Implemented Complete Allocation Feature with Budget Validation:**
+            -   Created full Clean Architecture implementation (domain, data, presentation layers).
+            -   Implemented sophisticated budget validation with employee cost-per-hour calculations.
+            -   Added range calendar functionality for bulk allocation operations.
+            -   Created real-time budget validation with user feedback dialogs.
+        4.  **Restructured Allocation Views into Calendar-Based System:**
+            -   **Employee Calendar View:** `EmployeeSelectorScreen` → `EmployeeCalendarView` - select employee, view their personal allocation calendar with project breakdown.
+            -   **Project Calendar View:** `ProjectSelectorScreen` → `ProjectCalendarView` - select project, view team allocation calendar with employee breakdown.
+            -   **Calendar Features:** Color-coded markers, hours/people indicators, budget tracking, real-time validation.
+        5.  **Updated Navigation and Routing:**
+            -   Added routes: `/calendar/employees`, `/calendar/projects`, `/calendar/employee/:id`, `/calendar/project/:id`.
+            -   Updated Home Screen dialog with three options: "Employee Calendar", "Project Calendar", "All Allocations".
+            -   Implemented deep linking with query parameters for pre-selection (`?employeeId=X`, `?projectId=X`).
+        6.  **Enhanced UI/UX:**
+            -   Professional selector screens with status indicators and project information.
+            -   Calendar views with sophisticated marker systems (hours for employees, people count for projects).
+            -   Integrated budget tracking and progress visualization.
+            -   Comprehensive CRUD operations with delete confirmation dialogs.
+
 ## Project State
 
 This section helps to regain the project state.
 
 *   **Current Milestone:** Milestone 1: Core workflow.
-*   **Last Action:** Fixed Register page back navigation.
+*   **Last Action:** Implemented comprehensive Allocation Management system with calendar-based views.
 *   **Next Action:**
-    1.  Pre-populate `Levels` table with default values.
-    2.  Modify Employee creation/editing to use a Dropdown for Level selection.
-    3.  Test Project CRUD functionality with new budget field.
-    4.  Test Employee CRUD functionality.
-    5.  Test Level CRUD functionality.
-    6.  Implement Allocation screen with validation (from Sprint 1).
+    1.  Begin Milestone 2: Config & notifications
+        -   Settings screen (overtime toggle, encryption toggle)
+        -   Implement encryption wrapper in Drift
+        -   Schedule daily reminder via `flutter_local_notifications`
+    2.  Consider implementing "All Allocations" global calendar view for comprehensive overview
+    3.  Add export functionality for allocation reports (CSV, Excel, PDF)

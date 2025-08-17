@@ -51,6 +51,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get notification_settings => '通知設定';
 
   @override
+  String get edit_profile => 'プロフィールを編集';
+
+  @override
+  String get edit_profile_description => 'プロフィール情報を管理';
+
+  @override
   String get localization_demo => 'ローカライズ デモ';
 
   @override

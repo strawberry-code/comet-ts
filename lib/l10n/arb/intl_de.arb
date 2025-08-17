@@ -56,6 +56,14 @@
   "@notification_settings": {
     "description": "Label for notification settings description"
   },
+  "edit_profile": "Profil bearbeiten",
+  "@edit_profile": {
+    "description": "Label for the edit profile option"
+  },
+  "edit_profile_description": "Verwalten Sie Ihre Profilinformationen",
+  "@edit_profile_description": {
+    "description": "Description for the edit profile option"
+  },
   "localization_demo": "Lokalisierungsdemo",
   "@localization_demo": {
     "description": "Label for the localization demo option"

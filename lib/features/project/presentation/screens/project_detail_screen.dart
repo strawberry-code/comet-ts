@@ -234,6 +234,20 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
                 },
               ),
               const SizedBox(height: 20),
+              // View Allocations button (only for existing projects)
+              if (widget.projectId != null) ...[
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      context.go('/allocations/project/${widget.projectId}');
+                    },
+                    icon: const Icon(Icons.schedule),
+                    label: const Text('View Project Allocations'),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

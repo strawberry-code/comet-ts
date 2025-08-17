@@ -120,6 +120,16 @@ class HomeScreen extends ConsumerWidget {
                           GoRouter.of(context).go('/levels'); // Navigate to the levels list screen
                         },
                       ),
+                      // Add Allocations feature tile
+                      _buildFeatureTile(
+                        context,
+                        icon: Icons.schedule, // Or a more suitable icon
+                        title: 'Allocations',
+                        color: Colors.deepPurple, // Choose a suitable color
+                        onTap: () {
+                          _showAllocationOptions(context);
+                        },
+                      ),
                     ],
                   ),
 
@@ -149,28 +159,9 @@ class HomeScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'This is a template project built with Flutter, Riverpod, and Go Router following Clean Architecture principles. It includes authentication, navigation, theme support, and more.',
+                            '''Comet TS is a mobile-only, fully offline timesheet manager. It allows HR managers to allocate hours to employees and generate simple reports. It's built with Flutter, Riverpod, and GoRouter, following Clean Architecture principles, and is designed to be cloud-ready for future integrations.''',
                           ),
-                          SizedBox(height: 16),
-                          Text(
-                            'Technologies used:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              Chip(label: Text('Flutter')),
-                              Chip(label: Text('Riverpod')),
-                              Chip(label: Text('GoRouter')),
-                              Chip(label: Text('Clean Architecture')),
-                              Chip(label: Text('Dio')),
-                              Chip(label: Text('Freezed')),
-                            ],
-                          ),
+                          
                         ],
                       ),
                     ),
@@ -270,6 +261,39 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showAllocationOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Allocation Calendar Views'),
+        content: const Text('Choose the type of allocation calendar you want to view:'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              GoRouter.of(context).go('/calendar/employees'); // Employee selector
+            },
+            child: const Text('Employee Calendar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              GoRouter.of(context).go('/calendar/projects'); // Project selector
+            },
+            child: const Text('Project Calendar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              GoRouter.of(context).go('/allocations'); // Keep the general view for now
+            },
+            child: const Text('All Allocations'),
+          ),
+        ],
       ),
     );
   }

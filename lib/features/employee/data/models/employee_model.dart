@@ -35,7 +35,7 @@ class EmployeeModel extends EmployeeEntity {
 
   EmployeesCompanion toDrift() {
     return EmployeesCompanion(
-      id: Value(id),
+      id: id == 0 ? const Value.absent() : Value(id),
       name: Value(name),
       levelId: Value(levelId),
     );

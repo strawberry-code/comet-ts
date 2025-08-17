@@ -56,6 +56,14 @@
   "@notification_settings": {
     "description": "Label for notification settings description"
   },
+  "edit_profile": "プロフィールを編集",
+  "@edit_profile": {
+    "description": "Label for the edit profile option"
+  },
+  "edit_profile_description": "プロフィール情報を管理",
+  "@edit_profile_description": {
+    "description": "Description for the edit profile option"
+  },
   "localization_demo": "ローカライズ デモ",
   "@localization_demo": {
     "description": "Label for the localization demo option"

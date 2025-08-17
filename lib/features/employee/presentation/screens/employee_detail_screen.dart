@@ -191,6 +191,20 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
                 error: (error, stack) => Text('Error loading levels: $error'),
               ),
               const SizedBox(height: 20),
+              // View Allocations button (only for existing employees)
+              if (widget.employeeId != null) ...[
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      context.go('/allocations/employee/${widget.employeeId}');
+                    },
+                    icon: const Icon(Icons.schedule),
+                    label: const Text('View Employee Allocations'),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

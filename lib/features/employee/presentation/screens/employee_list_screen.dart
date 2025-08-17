@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/domain/entities/employee_entity.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/presentation/providers/employee_providers.dart';
 import 'package:flutter_riverpod_clean_architecture/features/employee/domain/usecases/delete_employee.dart';
+import 'package:flutter_riverpod_clean_architecture/features/level/presentation/providers/level_providers.dart';
 
 class EmployeeListScreen extends ConsumerWidget {
   const EmployeeListScreen({super.key});
@@ -11,6 +12,7 @@ class EmployeeListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final employeesAsync = ref.watch(employeesListProvider);
+    final levelsAsync = ref.watch(levelsListProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,42 +36,51 @@ class EmployeeListScreen extends ConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(employeesListProvider);
+          ref.invalidate(levelsListProvider);
         },
         child: employeesAsync.when(
-          data: (employees) {
-            if (employees.isEmpty) {
-              return ListView(
-                children: const [
-                  Center(
-                    child: Text('No employees yet. Add one!'),
-                  ),
-                ],
-              );
-            }
-            return ListView.builder(
-              itemCount: employees.length,
-              itemBuilder: (context, index) {
-                final employee = employees[index];
-                return ListTile(
-                  title: Text(employee.name),
-                  subtitle: Text('Level ID: ${employee.levelId}'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      // Navigate to edit employee screen
-                      context.go('/employees/${employee.id}');
-                    },
-                  ),
-                  onLongPress: () {
-                    // Show delete confirmation dialog
-                    EmployeeListScreen._confirmDelete(context, ref, employee);
-                  },
+          data: (employees) => levelsAsync.when(
+            data: (levels) {
+              if (employees.isEmpty) {
+                return ListView(
+                  children: const [
+                    Center(
+                      child: Text('No employees yet. Add one!'),
+                    ),
+                  ],
                 );
-              },
-            );
-          },
+              }
+              return ListView.builder(
+                itemCount: employees.length,
+                itemBuilder: (context, index) {
+                  final employee = employees[index];
+                  final level = levels.firstWhere(
+                    (l) => l.id == employee.levelId,
+                    orElse: () => throw Exception('Level not found'),
+                  );
+                  return ListTile(
+                    title: Text(employee.name),
+                    subtitle: Text(level.name),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        // Navigate to edit employee screen
+                        context.go('/employees/${employee.id}');
+                      },
+                    ),
+                    onLongPress: () {
+                      // Show delete confirmation dialog
+                      EmployeeListScreen._confirmDelete(context, ref, employee);
+                    },
+                  );
+                },
+              );
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stack) => Center(child: Text('Error loading levels: $error')),
+          ),
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(child: Text('Error: $error')),
+          error: (error, stack) => Center(child: Text('Error loading employees: $error')),
         ),
       ),
     );

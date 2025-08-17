@@ -192,6 +192,18 @@ abstract class AppLocalizations {
   /// **'Configure notification preferences'**
   String get notification_settings;
 
+  /// Label for the edit profile option
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get edit_profile;
+
+  /// Description for the edit profile option
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your profile information'**
+  String get edit_profile_description;
+
   /// Label for the localization demo option
   ///
   /// In en, this message translates to:
