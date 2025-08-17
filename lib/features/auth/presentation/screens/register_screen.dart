@@ -14,8 +14,7 @@ class RegisterScreen extends ConsumerStatefulWidget {
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -23,8 +22,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -36,16 +34,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       FocusScope.of(context).unfocus();
       
       // Get form values
-      final name = _nameController.text.trim();
-      final email = _emailController.text.trim();
+      final username = _usernameController.text.trim();
       final password = _passwordController.text;
       
       // Call register method from auth provider
       await ref.read(authProvider.notifier).register(
-            name: name,
-            email: email,
+            username: username,
             password: password,
           );
+
+      if (!mounted) return;
       
       // Check if registration was successful
       final authState = ref.read(authProvider);
@@ -106,34 +104,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 32),
                   TextFormField(
-                    controller: _nameController,
+                    controller: _usernameController,
                     decoration: const InputDecoration(
-                      labelText: 'Name',
-                      hintText: 'Enter your full name',
+                      labelText: 'Username',
+                      hintText: 'Enter your username',
                       prefixIcon: Icon(Icons.person_outline),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
-                      prefixIcon: Icon(Icons.email_outlined),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!AppUtils.isValidEmail(value)) {
-                        return 'Please enter a valid email';
+                        return 'Please enter your username';
                       }
                       return null;
                     },

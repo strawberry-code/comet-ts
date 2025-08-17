@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_clean_architecture/core/router/locale_aware_router.dart';
 import 'package:flutter_riverpod_clean_architecture/core/utils/app_utils.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/presentation/providers/auth_provider.dart';
+
+import '../../../../core/constants/app_constants.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -76,8 +81,8 @@ class HomeScreen extends ConsumerWidget {
                             radius: 30,
                             backgroundColor: Theme.of(context).colorScheme.primary,
                             child: Text(
-                              user.name.isNotEmpty
-                                  ? user.name.substring(0, 1).toUpperCase()
+                              user.username.isNotEmpty
+                                  ? user.username.substring(0, 1).toUpperCase()
                                   : 'U',
                               style: const TextStyle(
                                 fontSize: 24,
@@ -92,17 +97,10 @@ class HomeScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  user.name,
+                                  user.username,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  user.email,
-                                  style: TextStyle(
-                                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
                                   ),
                                 ),
                               ],
@@ -245,13 +243,35 @@ class HomeScreen extends ConsumerWidget {
             label: 'Settings',
           ),
         ],
+
         onTap: (index) {
-          // Handle navigation
-          if (index != 0) {
-            AppUtils.showSnackBar(
-              context,
-              message: 'This feature is not implemented yet',
-            );
+          switch (index) {
+            case 0:
+              context.goWithLocale(AppConstants.homeRoute);
+              break;
+            case 1:
+              AppUtils.showSnackBar(
+                context,
+                message: 'This feature is not implemented yet',
+              );
+              //context.goWithLocale(AppConstants.exploreRoute);
+              break;
+            case 2:
+              AppUtils.showSnackBar(
+                context,
+                message: 'This feature is not implemented yet',
+              );
+              //context.goWithLocale(AppConstants.notificationsRoute);
+              break;
+            case 3:
+              context.goWithLocale(AppConstants.settingsRoute);
+              break;
+            default:
+              AppUtils.showSnackBar(
+                context,
+                message: 'This feature is not implemented yet',
+              );
+              break;
           }
         },
       ),

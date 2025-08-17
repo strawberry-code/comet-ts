@@ -4,6 +4,7 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter_riverpod_clean_architecture/core/constants/app_constants.dart';
 import 'package:flutter_riverpod_clean_architecture/core/utils/app_review_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod_clean_architecture/core/providers/shared_preferences_provider.dart';
 
 import '../providers/localization_providers.dart';
 

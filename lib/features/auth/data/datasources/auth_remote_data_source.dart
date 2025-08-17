@@ -2,16 +2,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_riverpod_clean_architecture/core/network/api_client.dart';
 import 'package:flutter_riverpod_clean_architecture/core/utils/app_utils.dart';
-import 'package:flutter_riverpod_clean_architecture/features/auth/data/models/user_model.dart';
+import 'package:flutter_riverpod_clean_architecture/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRemoteDataSource {
-  /// Login a user with email and password
-  Future<UserModel> login({required String email, required String password});
+  /// Login a user with username and password
+  Future<UserEntity> login({required String username, required String password});
   
   /// Register a new user
-  Future<UserModel> register({
-    required String name,
-    required String email,
+  Future<UserEntity> register({
+    required String username,
     required String password,
   });
 }
@@ -22,7 +21,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(this._apiClient);
 
   @override
-  Future<UserModel> login({required String email, required String password}) async {
+  Future<UserEntity> login({required String username, required String password}) async {
     try {
       // Check network connection
       final hasNetwork = await AppUtils.hasNetworkConnection();
@@ -37,29 +36,27 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       await Future.delayed(const Duration(seconds: 1));
       
       // Create a mock user for demonstration
-      return UserModel(
-        id: 'user-123',
-        name: 'John Doe',
-        email: email,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
+      return UserEntity(
+        id: 1, // Mock ID
+        username: username,
+        passwordHash: 'mock_hashed_password',
+        biometricsEnabled: false,
       );
       
       // In real implementation:
       // final response = await _apiClient.post('/auth/login', data: {
-      //   'email': email,
+      //   'username': username,
       //   'password': password,
       // });
-      // return UserModel.fromJson(response['user']);
+      // return UserEntity.fromJson(response['user']);
     } on Exception catch (e) {
       throw _handleException(e);
     }
   }
 
   @override
-  Future<UserModel> register({
-    required String name,
-    required String email,
+  Future<UserEntity> register({
+    required String username,
     required String password,
   }) async {
     try {
@@ -76,21 +73,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       await Future.delayed(const Duration(seconds: 1));
       
       // Create a mock user for demonstration
-      return UserModel(
-        id: 'user-${DateTime.now().millisecondsSinceEpoch}',
-        name: name,
-        email: email,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
+      return UserEntity(
+        id: DateTime.now().millisecondsSinceEpoch, // Mock ID
+        username: username,
+        passwordHash: 'mock_hashed_password',
+        biometricsEnabled: false,
       );
       
       // In real implementation:
       // final response = await _apiClient.post('/auth/register', data: {
-      //   'name': name,
-      //   'email': email,
+      //   'username': username,
       //   'password': password,
       // });
-      // return UserModel.fromJson(response['user']);
+      // return UserEntity.fromJson(response['user']);
     } on Exception catch (e) {
       throw _handleException(e);
     }

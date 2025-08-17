@@ -1,91 +1,125 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_clean_architecture/core/constants/app_constants.dart';
-import 'package:flutter_riverpod_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_riverpod_clean_architecture/core/error/failures.dart';
-import 'package:flutter_riverpod_clean_architecture/core/network/api_client.dart';
 import 'package:flutter_riverpod_clean_architecture/core/storage/local_storage_service.dart';
 import 'package:flutter_riverpod_clean_architecture/core/storage/secure_storage_service.dart';
-import 'package:flutter_riverpod_clean_architecture/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:flutter_riverpod_clean_architecture/main.dart';
-import 'package:flutter_riverpod_clean_architecture/features/auth/data/models/user_model.dart';
+import 'package:flutter_riverpod_clean_architecture/core/utils/password_hasher.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/domain/entities/user_entity.dart';
 import 'package:flutter_riverpod_clean_architecture/features/auth/domain/repositories/auth_repository.dart';
-
-import '../../../../core/providers/localization_providers.dart';
+import 'package:flutter_riverpod_clean_architecture/features/user/domain/repositories/user_repository.dart';
+import 'package:flutter_riverpod_clean_architecture/features/user/domain/usecases/create_user.dart';
+import 'package:flutter_riverpod_clean_architecture/features/user/domain/usecases/get_user.dart';
+import 'package:flutter_riverpod_clean_architecture/features/user/domain/usecases/get_user_by_username.dart';
+import 'package:flutter_riverpod_clean_architecture/features/user/providers/user_providers.dart';
+import 'package:flutter_riverpod_clean_architecture/core/providers/shared_preferences_provider.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource _remoteDataSource;
   final LocalStorageService _localStorageService;
   final SecureStorageService _secureStorageService;
+  final UserRepository _userRepository;
+  final CreateUser _createUserUseCase;
+  final GetUser _getUserUseCase;
+  final GetUserByUsername _getUserByUsernameUseCase;
   
   AuthRepositoryImpl({
-    required AuthRemoteDataSource remoteDataSource,
     required LocalStorageService localStorageService,
     required SecureStorageService secureStorageService,
-  }) : _remoteDataSource = remoteDataSource,
-       _localStorageService = localStorageService,
-       _secureStorageService = secureStorageService;
+    required UserRepository userRepository,
+    required CreateUser createUserUseCase,
+    required GetUser getUserUseCase,
+    required GetUserByUsername getUserByUsernameUseCase,
+  }) : _localStorageService = localStorageService,
+       _secureStorageService = secureStorageService,
+       _userRepository = userRepository,
+       _createUserUseCase = createUserUseCase,
+       _getUserUseCase = getUserUseCase,
+       _getUserByUsernameUseCase = getUserByUsernameUseCase;
 
   @override
   Future<Either<Failure, UserEntity>> login({
-    required String email, 
+    required String username, 
     required String password,
   }) async {
     try {
-      final response = await _remoteDataSource.login(email: email, password: password);
+      final userResult = await _getUserByUsernameUseCase(GetUserByUsernameParams(username: username));
       
-      // Save user data locally
-      await _localStorageService.setObject(AppConstants.userDataKey, response.toJson());
-      
-      // Save auth token securely
-      await _secureStorageService.write(
-        key: AppConstants.tokenKey, 
-        value: response.id, // assuming token is stored in id for demo
+      return userResult.fold(
+        (failure) => Left(failure),
+        (user) async {
+          if (user == null) {
+            print('Login failed: User not found after retrieval.');
+            return const Left(AuthFailure(message: 'User not found'));
+          }
+          print('Login: User retrieved: ${user.username} with passwordHash: ${user.passwordHash}');
+          if (user.passwordHash == null || !PasswordHasher.verifyPassword(password, user.passwordHash!)) {
+            print('Login failed: Invalid credentials. Stored hash: ${user.passwordHash}');
+            return const Left(AuthFailure(message: 'Invalid credentials'));
+          }
+          
+          // Save user data locally
+          await _localStorageService.setObject(AppConstants.userDataKey, user.username);
+          
+          // Save auth token securely (using username as token for now)
+          await _secureStorageService.write(
+            key: AppConstants.tokenKey, 
+            value: user.username,
+          );
+          
+          return Right(user);
+        },
       );
-      
-      return Right(response.toEntity());
-    } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
-    } on NetworkException {
-      return const Left(NetworkFailure());
-    } on UnauthorizedException catch (e) {
-      return Left(AuthFailure(message: e.message));
-    } on Exception {
+    } on CacheFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      // Log the error for debugging
+      print('Unexpected error during login: $e');
       return const Left(ServerFailure());
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> register({
-    required String name,
-    required String email,
+    required String username,
     required String password,
   }) async {
     try {
-      final response = await _remoteDataSource.register(
-        name: name, 
-        email: email, 
-        password: password,
+      // Check if user already exists (assuming username is unique)
+      final existingUserResult = await _getUserByUsernameUseCase(GetUserByUsernameParams(username: username));
+      if (existingUserResult.isRight() && existingUserResult.getOrElse(() => null) != null) {
+        return const Left(ValidationFailure(message: 'User already exists'));
+      }
+
+      final hashedPassword = PasswordHasher.hashPassword(password);
+      print('Registering user: $username with hashed password: $hashedPassword');
+      final newUser = UserEntity(
+        id: 0, // Let the database auto-increment the ID
+        username: username,
+        passwordHash: hashedPassword,
       );
       
-      // Save user data locally
-      await _localStorageService.setObject(AppConstants.userDataKey, response.toJson());
+      final createdUserResult = await _createUserUseCase(CreateUserParams(user: newUser));
       
-      // Save auth token securely
-      await _secureStorageService.write(
-        key: AppConstants.tokenKey, 
-        value: response.id, // assuming token is stored in id for demo
+      return createdUserResult.fold(
+        (failure) => Left(failure),
+        (user) async {
+          // Save user data locally
+          await _localStorageService.setObject(AppConstants.userDataKey, user.username);
+          
+          // Save auth token securely (using username as token for now)
+          await _secureStorageService.write(
+            key: AppConstants.tokenKey, 
+            value: user.username,
+          );
+          
+          return Right(user);
+        },
       );
-      
-      return Right(response.toEntity());
-    } on ServerException catch (e) {
-      return Left(ServerFailure(message: e.message));
-    } on NetworkException {
-      return const Left(NetworkFailure());
-    } on BadRequestException catch (e) {
-      return Left(ValidationFailure(message: e.message));
-    } on Exception {
+    } on CacheFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      // Log the error for debugging
+      print('Unexpected error during registration: $e');
       return const Left(ServerFailure());
     }
   }
@@ -100,49 +134,13 @@ class AuthRepositoryImpl implements AuthRepository {
       await _secureStorageService.delete(key: AppConstants.tokenKey);
       
       return const Right(null);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
-    } on Exception {
-      return const Left(ServerFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> isAuthenticated() async {
-    try {
-      final token = await _secureStorageService.read(key: AppConstants.tokenKey);
-      return Right(token != null && token.isNotEmpty);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
-    } on Exception {
-      return const Left(ServerFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, UserEntity>> getCurrentUser() async {
-    try {
-      final userData = _localStorageService.getObject(AppConstants.userDataKey);
-      
-      if (userData == null) {
-        return const Left(AuthFailure(message: 'User not found'));
-      }
-      
-      final user = UserModel.fromJson(userData as Map<String, dynamic>);
-      return Right(user.toEntity());
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
-    } on Exception {
+    } catch (e) {
       return const Left(ServerFailure());
     }
   }
 }
 
 // Dependencies
-final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());
-
-// Using sharedPreferencesProvider from main.dart
-
 final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
   return LocalStorageService(prefs);
@@ -152,17 +150,21 @@ final secureStorageServiceProvider = Provider<SecureStorageService>((ref) {
   return SecureStorageService.create();
 });
 
-// Remote data source provider
-final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
-  final apiClient = ref.watch(apiClientProvider);
-  return AuthRemoteDataSourceImpl(apiClient);
-});
-
 // Repository provider
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  final localStorageService = ref.watch(localStorageServiceProvider);
+  final secureStorageService = ref.watch(secureStorageServiceProvider);
+  final userRepository = ref.watch(userRepositoryProvider);
+  final createUserUseCase = ref.watch(createUserProvider);
+  final getUserUseCase = ref.watch(getUserProvider);
+  final getUserByUsernameUseCase = ref.watch(getUserByUsernameProvider);
+
   return AuthRepositoryImpl(
-    remoteDataSource: ref.watch(authRemoteDataSourceProvider),
-    localStorageService: ref.watch(localStorageServiceProvider),
-    secureStorageService: ref.watch(secureStorageServiceProvider),
+    localStorageService: localStorageService,
+    secureStorageService: secureStorageService,
+    userRepository: userRepository,
+    createUserUseCase: createUserUseCase,
+    getUserUseCase: getUserUseCase,
+    getUserByUsernameUseCase: getUserByUsernameUseCase,
   );
 });

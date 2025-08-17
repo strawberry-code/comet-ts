@@ -11,15 +11,15 @@ class LoginUseCase {
   LoginUseCase(this._repository);
   
   Future<Either<Failure, UserEntity>> execute({
-    required String email, 
+    required String username, 
     required String password,
   }) {
     // Add any validation logic here if needed
-    if (email.isEmpty || password.isEmpty) {
-      return Future.value(const Left(InputFailure(message: 'Email and password cannot be empty')));
+    if (username.isEmpty || password.isEmpty) {
+      return Future.value(const Left(InputFailure(message: 'Username and password cannot be empty')));
     }
     
-    return _repository.login(email: email, password: password);
+    return _repository.login(username: username, password: password);
   }
 }
 

@@ -67,6 +67,8 @@ class LocalizationUtils {
         return '日本語';
       case 'bn':
         return 'বাংলা';
+      case 'it':
+        return 'Italiano';
       default:
         return locale.languageCode;
     }

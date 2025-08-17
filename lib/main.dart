@@ -9,6 +9,7 @@ import 'package:flutter_riverpod_clean_architecture/core/theme/app_theme.dart';
 import 'package:flutter_riverpod_clean_architecture/core/updates/update_providers.dart';
 import 'package:flutter_riverpod_clean_architecture/l10n/app_localizations_delegate.dart';
 import 'package:flutter_riverpod_clean_architecture/l10n/l10n.dart';
+import 'package:flutter_riverpod_clean_architecture/core/providers/shared_preferences_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -16,7 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize shared preferences
-  //final sharedPreferences = await SharedPreferences.getInstance();
   final prefs = await SharedPreferences.getInstance();
 
   // Run the app with ProviderScope to enable Riverpod
@@ -56,29 +56,32 @@ class MyApp extends ConsumerWidget {
     // Watch the persistent locale
     final locale = ref.watch(persistentLocaleProvider);
 
-    return UpdateChecker(
-      autoPrompt: true,
-      enforceCriticalUpdates: true,
-      child: AccessibilityWrapper(
-        child: MaterialApp.router(
-          title: AppConstants.appName,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: themeMode,
-          routerConfig: router,
-          debugShowCheckedModeBanner: false,
+    return MaterialApp.router(
+      title: AppConstants.appName,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
 
-          // Localization settings
-          locale: locale,
-          localizationsDelegates: [
-            const AppLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-        ),
-      ),
+      // Localization settings
+      locale: locale,
+      localizationsDelegates: [
+        const AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) {
+        return UpdateChecker(
+          autoPrompt: true,
+          enforceCriticalUpdates: true,
+          child: AccessibilityWrapper(
+            child: child!,
+          ),
+        );
+      },
     );
   }
 }

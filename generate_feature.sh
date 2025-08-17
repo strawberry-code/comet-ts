@@ -43,6 +43,18 @@ usage() {
     exit 1
 }
 
+generate_ui_only_files() {
+    echo "UI only feature generation not implemented yet."
+}
+
+generate_service_only_files() {
+    echo "Service only feature generation not implemented yet."
+}
+
+generate_no_repository_files() {
+    echo "No repository feature generation not implemented yet."
+}
+
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in

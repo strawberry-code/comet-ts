@@ -58,11 +58,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   // Login
-  Future<void> login({required String email, required String password}) async {
+  Future<void> login({required String username, required String password}) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     
     final result = await _loginUseCase.execute(
-      email: email,
+      username: username,
       password: password,
     );
     
@@ -83,15 +83,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   // Register
   Future<void> register({
-    required String name,
-    required String email,
+    required String username,
     required String password,
   }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     
     final result = await _registerUseCase.execute(
-      name: name,
-      email: email,
+      username: username,
       password: password,
     );
     
